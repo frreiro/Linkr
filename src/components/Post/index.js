@@ -22,6 +22,9 @@ const Banner = styled.div`
     background-color: #171717;
     position: relative;
     border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 19px 23px 20px 86px;
     margin-bottom: 16px;
 `

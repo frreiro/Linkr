@@ -22,14 +22,15 @@ const Banner = styled.div`
     border: 1px solid #4D4D4D;
     border-radius: 11px;
     display: flex;
+    position: relative;
 
     div{
         display: flex;
         flex-direction: column;
-        padding: 24px 27px 23px 19px;
+        padding: 24px 160px 23px 19px;
         justify-content: space-between;
-
-        h1{
+        h1{ 
+            word-break: break-word;
             font-size: 16px;
             font-weight: 400;
             color: #CECECE;
@@ -50,7 +51,14 @@ const Banner = styled.div`
     
     img{
         width: 154px;
-        height: 155px;
+        height: 154px;
         border-radius: 0px 11px 11px 0px;
+        position: absolute;
+        position: absolute;
+        margin-top: auto;
+        margin-bottom: auto;
+        top: 0;
+        bottom: 0;
+        right: 0;
     }
 `
