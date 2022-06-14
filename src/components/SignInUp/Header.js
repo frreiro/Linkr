@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import container from "./container";
+
 
 export default function Header(){
     return(
