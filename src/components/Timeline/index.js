@@ -1,5 +1,5 @@
-import { useState } from "react";
 import styled from "styled-components"
+import { Header } from "../Header";
 import Post from "../Post";
 
 const posts = [{
@@ -15,42 +15,45 @@ const posts = [{
 }]
 
 export default function Timeline() {
-    // const [posts, setPosts] = useState(null)
-
+    //TODO: requisição com os posts
 
     return (
-        <Container>
-            <div className="timeline">
-                <h1>timeline</h1>
-            </div>
-            {posts.map((post) => {
-                return (
-                    <Post
-                        userImage={post.userImage}
-                        userName={post.userName}
-                        postDescription={post.postDescription}
-                        linkInfos={post.linkInfos}
-                    />
-                )
-            })}
-        </Container>
+        <>
+            <Header />
+            <Container>
+                <div className="timeline">
+                    <h1>timeline</h1>
+                </div>
+                {posts.map((post) => {
+                    return (
+                        <Post
+                            userImage={post.userImage}
+                            userName={post.userName}
+                            postDescription={post.postDescription}
+                            linkInfos={post.linkInfos}
+                        />
+                    )
+                })}
+            </Container>
+        </>
+
     )
 }
 
 
 const Container = styled.div`
-    background-color: #4D4D4D;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 78px;
 
-    .timeline{
-        width: 611px;
-        font-family: 'Oswald';
-        font-size: 43px;
-        font-weight: 700;
-        color: #fff;
-        text-align: left;
-        margin-bottom: 43px;
+            .timeline{
+                width: 611px;
+            font-family: 'Oswald';
+            font-size: 43px;
+            font-weight: 700;
+            color: #fff;
+            text-align: left;
+            margin-bottom: 43px;
     }
-`
+            `

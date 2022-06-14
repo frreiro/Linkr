@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Timeline from "../Timeline";
-import "../../assets/reset.css"
 import GlobalStyle from "../../globalStyles";
+import { Home } from "../../pages/Home";
+import Timeline from "../Timeline"
+import "../../assets/reset.css"
 
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
             <GlobalStyle />
             <BrowserRouter>
                 <Routes>
+                    <Route path="/home" element={<Home />} />
                     <Route path="/timeline" element={<Timeline />} />
                 </Routes>
             </BrowserRouter>
