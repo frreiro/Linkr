@@ -1,15 +1,15 @@
 import styled from 'styled-components'
 
 
-export default function LinkBanner() {
+export default function LinkBanner(props) {
     return (
-        <Banner onClick={() => window.open('https://miro.medium.com/fit/c/294/294/0*k9CL2yoHU6ELTkmi.png', '_blank')}>
+        <Banner onClick={() => window.open(props.link.url, '_blank')}>
             <div>
-                <h1>Como aplicar o Material UI em um projeto React</h1>
-                <h2>Hey! I have moved this tutorial to my personal blog. Same content, new location. Sorry about making you click through to another page.</h2>
-                <p>https://medium.com/@pshrmn/a-simple-react-router</p>
+                <h1>{props.link.title}</h1>
+                <h2>{props.link.description}</h2>
+                <p>{props.link.url}</p>
             </div>
-            <img src='https://miro.medium.com/fit/c/294/294/0*k9CL2yoHU6ELTkmi.png' />
+            <img src={props.link.image} alt='site' />
         </Banner>
     )
 }

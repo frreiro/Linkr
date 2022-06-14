@@ -2,15 +2,15 @@ import styled from 'styled-components'
 import LinkBanner from '../LinkBanner'
 
 
-export default function Post() {
+export default function Post(props) {
     return (
         <Banner>
-            <ProfilePic src='https://img.r7.com/images/meme-sorriso-forcado-hide-the-pain-harold-maurice-andras-arato-08112019141226221?dimensions=771x420&no_crop=true' />
+            <ProfilePic src={props.userImage} />
             <Userinfo>
-                <h1 className='name'>Juvenal Juvêncio</h1>
-                <p className='description'>Muito maneiro esse tutorial de Material UI com React, deem uma olhada!</p>
+                <h1 className='name'>{props.userName}</h1>
+                <p className='description'>{props.postDescription}</p>
             </Userinfo>
-            <LinkBanner />
+            <LinkBanner link={props.linkInfos} />
         </Banner>
     )
 }
