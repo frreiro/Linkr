@@ -46,6 +46,7 @@ const Container = styled.div`
 
     .timeline{
         width: 611px;
+        font-family: 'Oswald';
         font-size: 43px;
         font-weight: 700;
         color: #fff;

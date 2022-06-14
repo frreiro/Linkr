@@ -1,15 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Timeline from "../Timeline";
 import "../../assets/reset.css"
+import GlobalStyle from "../../globalStyles";
+
 
 export default function App() {
     return (
-        <BrowserRouter>
-            <Routes>
-                {/* <Route path="/" element={<h1>Teste</h1>} /> */}
-                <Route path="/" element={<Timeline />} />
-            </Routes>
-        </BrowserRouter>
-
+        <>
+            <GlobalStyle />
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/timeline" element={<Timeline />} />
+                </Routes>
+            </BrowserRouter>
+        </>
     );
 }
