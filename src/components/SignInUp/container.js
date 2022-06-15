@@ -39,4 +39,18 @@ export const Container = styled.main`
         text-decoration: none;
         color: white;
     }
+    @media only screen and (min-width: 935px) {
+        width: 35vw;
+        height: 100vh;
+        
+        form{
+            margin-top: 50%;
+        }
+    }
+`
+
+export const Desktop = styled.main`
+    @media only screen and (min-width: 935px) {
+        display: flex;
+    }
 `

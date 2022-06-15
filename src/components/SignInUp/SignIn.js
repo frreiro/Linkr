@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 
 import Header from "./Header";
 import { Container } from './container';
+import { Desktop } from './container';
 import Loader from './Loader';
 
 export default function SignIn() {
@@ -40,7 +41,7 @@ export default function SignIn() {
         })
     }
     return (
-        <>
+        <Desktop>
             <Header />
             <Container>
                 <form onSubmit={logInUser}>
@@ -61,10 +62,10 @@ export default function SignIn() {
                     <button disabled={butt !== "Log In" ? true : false} 
                             type="submit">{butt}
                     </button>
-                    
+
                     <Link to="/sign-up">First time? create an account!</Link>
                 </form>
             </Container>
-        </>
+        </Desktop>
     )
 }

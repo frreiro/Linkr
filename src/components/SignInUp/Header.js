@@ -28,4 +28,17 @@ const Container = styled.header`
         font-size: 76px;
         font-family: 'Oswald';
     }
+    @media only screen and (min-width: 935px) {
+        width: 65vw;
+        height: 100vh;  
+        align-items: flex-start;
+        h1,h2{
+            margin-left: 18vw;
+            font-size: 43px;
+        }
+        h1{
+            font-size: 126px;
+        }
+
+    }
 `
