@@ -6,44 +6,37 @@ import { Oval } from "react-loader-spinner";
 import { Header } from "../Header";
 import Post from "../Post";
 
-// const posts = [{
-//     userImage: 'https://img.r7.com/images/meme-sorriso-forcado-hide-the-pain-harold-maurice-andras-arato-08112019141226221?dimensions=771x420&no_crop=true',
-//     userName: 'Gabriel Pedro',
-//     postDescription: 'Foi massa, muito lagal, deem uma olhada nesse link aqui é top!',
-//     linkInfo: {
-//         title: 'Como comer arroz e feijão com uma só garfada, topoaksoakoskaoksoaksaoksoaksoaksoaksaosk',
-//         description: 'A moda agora é comer arroz feijão e bife mas tudo de uma vez',
-//         url: 'https://www.google.com.br',
-//         image: 'https://miro.medium.com/fit/c/294/294/0*k9CL2yoHU6ELTkmi.png'
-//     }
-// }]
 
 export default function Timeline() {
-    //TODO: fazer as requisições constantementes
-    const [posts, setPosts] = useState([])
 
-    //TODO: alterar o header para o token necessário
+    const loader = <Oval ariaLabel="loading-indicator" height={50} width={50} strokeWidthSecondary={1} color="#ffffff" secondaryColor="#333333" />
+    const errorMessage = <h1 className="response">An error occured while trying to fetch the posts, please refresh the page</h1>
+    const notFound = <h1 className="response">There are no posts yet</h1>
+
+    const [posts, setPosts] = useState([])
+    const [response, setResponse] = useState(loader)
+
+    const token = localStorage.getItem('token')
+
     const config = {
         headers: {
-            "Authorization": `Bearer ${123456}`
+            "Authorization": `Bearer ${token}`
         }
     }
 
+    //TODO: fazer as requisições constantementes
     useEffect(() => {
         axios.get('http://localhost:5000/timeline', config)
-            .then(promise => setPosts(promise.data))
-            .catch(e => console.log(e));
+            .then(promise => {
+                promise.data.length !== 0 ? setPosts(promise.data) : setResponse(notFound)
+            })
+            .catch(e => setResponse(errorMessage));
     }, [])
 
+    if (posts.length > 0 && Object.keys(posts[0]).length < 0) {
+        setResponse(notFound)
+    }
 
-    const loader = <Oval
-        ariaLabel="loading-indicator"
-        height={100}
-        width={100}
-        strokeWidthSecondary={1}
-        color="#ffffff"
-        secondaryColor="#333333"
-    />
 
     return (
         <>
@@ -52,7 +45,7 @@ export default function Timeline() {
                 <div className="timeline">
                     <h1>timeline</h1>
                 </div>
-                {posts.length >= 1 ? posts.map((post) => {
+                {posts.length > 0 && Object.keys(posts[0]).length > 0 ? posts.map((post) => {
                     return (
                         <Post
                             key={post.id}
@@ -62,7 +55,7 @@ export default function Timeline() {
                             linkInfos={post.linkInfo}
                         />
                     )
-                }) : loader}
+                }) : response}
             </Container>
         </>
 
@@ -71,18 +64,31 @@ export default function Timeline() {
 
 
 const Container = styled.div`
+    width: 100vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin-top: 78px;
-
+    align-items: center;
+    
     .timeline{
-        width: 611px;
+        width: calc(100vw - 17px);
         font-family: 'Oswald';
         font-size: 43px;
         font-weight: 700;
         color: #fff;
-        text-align: left;
+        margin-left: 17px;
         margin-bottom: 43px;
+    }
+
+    .response{
+        text-align: center
+        /* margin-left: 17px; */
+    }
+
+    @media(min-width: 376px){
+        .timeline{
+            width: 611px;
+        }
     }
 `
