@@ -27,6 +27,7 @@ export const Container = styled.main`
   input {
     margin-bottom: 11px;
     background: #ffffff;
+    color: #9f9f9f;
   }
   button {
     background: #1877f2;
