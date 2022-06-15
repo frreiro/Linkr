@@ -54,7 +54,7 @@ export default function SignIn() {
                         ></input>
 
                         <button type="submit">Log In</button>
-                        <Link to="/sig-in">First time? create an account!</Link>
+                        <Link to="/sign-up">First time? create an account!</Link>
                     </form>
                 </form>
             </Container>
