@@ -1,11 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 
 // TODO: Pegar a foto de perfil do context
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    localStorage.removeItem('token');
+    navigate('/');
+  }
 
   return (
     <>
@@ -22,7 +29,7 @@ export const Header = () => {
 
       {isMenuOpen && (
         <Menu>
-          <p>Logout</p>
+          <p onClick={handleLogout}>Logout</p>
         </Menu>
       )}
     </>
