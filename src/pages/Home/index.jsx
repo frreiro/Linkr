@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Header } from '../../components/Header';
 
 export function Home() {
@@ -9,15 +8,3 @@ export function Home() {
     </div>
   );
 }
-=======
-import { Header } from "../../components/Header";
-
-
-export function Home() {
-    return (
-        <div>
-            <Header />
-        </div>
-    );
-}
->>>>>>> timeline-branch
