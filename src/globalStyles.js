@@ -8,18 +8,15 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     outline: none;
   }
-
   body {
     font-family: 'Lato', sans-serif;
     background-color: #333333;
     color: #ffffff;
   }
-
   input, textarea, button {
     font-family: 'Lato', sans-serif;
     color: #ffffff;
   }
-
   button, a {
     cursor: pointer;
   }

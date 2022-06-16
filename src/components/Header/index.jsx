@@ -43,24 +43,20 @@ const Container = styled.header`
   background-color: #151515;
   color: #fff;
   padding: 0.6rem;
-
   h1 {
     font-family: 'Passion One', sans-serif;
     font-weight: 700;
     font-size: 3rem;
     margin-left: 1.5rem;
   }
-
   div {
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-right: 1.5rem;
-
     svg {
       font-size: 1.5rem;
     }
-
     img {
       width: 55px;
       height: 55px;
