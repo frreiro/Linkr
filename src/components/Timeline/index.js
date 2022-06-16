@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Oval } from "react-loader-spinner";
 
 import { Header } from "../Header";
+import PublishPost from "../PublishPost";
 import Post from "../Post";
 
 
@@ -45,6 +46,7 @@ export default function Timeline() {
                 <div className="timeline">
                     <h1>timeline</h1>
                 </div>
+                <PublishPost/>
                 {posts.length > 0 && Object.keys(posts[0]).length > 0 ? posts.map((post) => {
                     return (
                         <Post
