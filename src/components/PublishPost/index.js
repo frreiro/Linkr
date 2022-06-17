@@ -1,22 +1,65 @@
 import styled from 'styled-components'
 import React, { useState } from 'react'
+import axios from 'axios'
 
-export default function PublishPost() {
+export default function PublishPost(props) {
     const URL = "http://localhost:5000/posts"
+
+    const {refresher} = props
 
     const [shareURL, setShareURL] = useState("")
     const [shareDescription, setShareDescription] = useState("")
+    const [disabled, setDisabled] = useState(false)
 
-    function sendPost(e) {
+    // TODO Get username and token from context
+    const username = "tek"
+    const token = "efe4b76a-a6e7-43e1-b20d-e777f5ff9bd8"
+
+    function disableAndSend(e) {
         e.preventDefault()
+        setDisabled(true)
 
+        if (shareURL) {
+            sendPost()
+        } else {
+            setDisabled(false)
+        }
+    }
+
+    function sendPost() {
+
+        const bodyData = {
+            username,
+            url: shareURL,
+            description: shareDescription
+        }
+
+        const userData = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }
+
+        const promise = axios.post(URL, bodyData, userData)
+
+        promise.catch(err => {
+            alert("Houve um erro ao publicar seu link.")
+            setDisabled(false)
+        })
+
+        promise.then(response => {
+            setShareURL("")
+            setShareDescription("")
+            setDisabled(false)
+            refresher()
+        })
     }
 
     return (
         <Container>
             <Share>What are you going to share today?</Share>
             <PostInfo>
-                <form onSubmit={sendPost}>
+                <form onSubmit={disableAndSend} style={disabled ? {opacity: '0.5'} : {}} disabled={disabled ? "disabled" : ""}>
                     <input type="text" 
                         value={shareURL}
                         onChange={(e) => setShareURL(e.target.value)} 
@@ -30,7 +73,7 @@ export default function PublishPost() {
                         ></textarea>
                     
                     <Publish>
-                        <button type="submit">Publish</button>
+                        <button type="submit">{disabled ? "Publishing..." : "Publish"}</button>
                     </Publish>
                 </form>
             </PostInfo>
@@ -45,6 +88,11 @@ const Container = styled.section`
     background: white;
     margin-bottom: 16px;
     padding: 10px 15px;
+
+    @media(min-width: 376px){
+        width: 611px;
+        border-radius: 16px;
+    }
 `
 
 const Share = styled.div`

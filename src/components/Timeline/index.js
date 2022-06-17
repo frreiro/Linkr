@@ -16,6 +16,7 @@ export default function Timeline() {
 
     const [posts, setPosts] = useState([])
     const [response, setResponse] = useState(loader)
+    const [refresh, setRefresh] = useState(0)
 
     const token = localStorage.getItem('token')
 
@@ -32,7 +33,7 @@ export default function Timeline() {
                 promise.data.length !== 0 ? setPosts(promise.data) : setResponse(notFound)
             })
             .catch(e => setResponse(errorMessage));
-    }, [])
+    }, [refresh])
 
     if (posts.length > 0 && Object.keys(posts[0]).length < 0) {
         setResponse(notFound)
@@ -46,7 +47,7 @@ export default function Timeline() {
                 <div className="timeline">
                     <h1>timeline</h1>
                 </div>
-                <PublishPost/>
+                <PublishPost refresher={() => setRefresh(refresh + 1)}/>
                 {posts.length > 0 && Object.keys(posts[0]).length > 0 ? posts.map((post) => {
                     return (
                         <Post
