@@ -6,6 +6,10 @@
     "axios": "^0.27.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+<<<<<<< HEAD
+=======
+    "react-icons": "^4.4.0",
+>>>>>>> main
     "react-loader-spinner": "^5.1.5",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",

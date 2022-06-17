@@ -1,5 +1,4 @@
-import styled from "styled-components";
-
+import styled from 'styled-components';
 
 export const Container = styled.main`
     height: 64vh;
@@ -26,6 +25,7 @@ export const Container = styled.main`
     input{
         margin-bottom: 11px;
         background: #FFFFFF;
+        color: #9F9F9F;
     }
     button{
         background: #1877F2;
@@ -48,7 +48,6 @@ export const Container = styled.main`
         }
     }
 `
-
 export const Desktop = styled.main`
     @media only screen and (min-width: 935px) {
         display: flex;
