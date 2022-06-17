@@ -11,9 +11,11 @@ export default function PublishPost(props) {
     const [shareDescription, setShareDescription] = useState("")
     const [disabled, setDisabled] = useState(false)
 
-    // TODO Get username and token from context
+    // TODO Get username, token and image from context/storage
     const username = "tek"
     const token = "efe4b76a-a6e7-43e1-b20d-e777f5ff9bd8"
+    const image = "https://pbs.twimg.com/profile_images/1389140738827501568/RUeCH5Dg_400x400.jpg"
+    
 
     function disableAndSend(e) {
         e.preventDefault()
@@ -57,26 +59,32 @@ export default function PublishPost(props) {
 
     return (
         <Container>
-            <Share>What are you going to share today?</Share>
-            <PostInfo>
-                <form onSubmit={disableAndSend} style={disabled ? {opacity: '0.5'} : {}} disabled={disabled ? "disabled" : ""}>
-                    <input type="text" 
-                        value={shareURL}
-                        onChange={(e) => setShareURL(e.target.value)} 
-                        placeholder="http://..."
-                        ></input>
-                    <textarea type="text" 
-                        value={shareDescription}
-                        onChange={(e) => setShareDescription(e.target.value)}  
-                        placeholder="Awesome article about #javascript" 
-                        rows="3"
-                        ></textarea>
-                    
-                    <Publish>
-                        <button type="submit">{disabled ? "Publishing..." : "Publish"}</button>
-                    </Publish>
-                </form>
-            </PostInfo>
+            <ProfilePic>
+                <img src={image} />
+            </ProfilePic>
+            
+            <InfoContainer>
+                <Share>What are you going to share today?</Share>
+                <PostInfo>
+                    <form onSubmit={disableAndSend} style={disabled ? {opacity: '0.5'} : {}} disabled={disabled ? "disabled" : ""}>
+                        <input type="text" 
+                            value={shareURL}
+                            onChange={(e) => setShareURL(e.target.value)} 
+                            placeholder="http://..."
+                            ></input>
+                        <textarea type="text" 
+                            value={shareDescription}
+                            onChange={(e) => setShareDescription(e.target.value)}  
+                            placeholder="Awesome article about #javascript" 
+                            rows="3"
+                            ></textarea>
+                        
+                        <Publish>
+                            <button type="submit">{disabled ? "Publishing..." : "Publish"}</button>
+                        </Publish>
+                    </form>
+                </PostInfo>
+            </InfoContainer>
         </Container>
     )
 }
@@ -84,6 +92,7 @@ export default function PublishPost(props) {
 const Container = styled.section`
     width: 100vw;
     height: auto;
+    display: flex;
 
     background: white;
     margin-bottom: 16px;
@@ -95,12 +104,41 @@ const Container = styled.section`
     }
 `
 
+const ProfilePic = styled.div` 
+    display: none;
+
+    @media(min-width: 376px) {
+        display: block;
+        width: 50px;
+        height: 50px;
+        margin-right: 15px;
+
+        img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 26.5px;
+        }
+    }
+    
+`
+
+const InfoContainer = styled.div`
+    width: 100%;
+`
+
 const Share = styled.div`
     color: #707070;
     font-size: 17px;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    
+    @media(min-width: 376px) {
+        justify-content: left;
+        align-items: left;
+    }
 `
 
 const PostInfo = styled.div`
@@ -111,6 +149,10 @@ const PostInfo = styled.div`
     align-items: center;
     flex-direction: column;
     margin-top: 10px;
+
+    form {
+        width: 100%;
+    }
 
     input {
         width: 100%;
