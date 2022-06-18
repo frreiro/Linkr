@@ -26,7 +26,6 @@ export default function Timeline() {
         }
     }
 
-<<<<<<< HEAD
     useEffect(() => {
         axios.get("http://localhost:5000/data", config)
         .then(promise => {
@@ -36,8 +35,6 @@ export default function Timeline() {
     },[])
 
     //TODO: fazer as requisições constantementes
-=======
->>>>>>> main
     useEffect(() => {
         axios.get('http://localhost:5000/timeline', config)
             .then(promise => {
