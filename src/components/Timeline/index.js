@@ -31,7 +31,6 @@ export default function Timeline() {
         axios.get("http://localhost:5000/data", config)
         .then(promise => {
             setData(promise.data)
-            console.log(promise.data)
         })
         .catch(e => alert(e));
     },[])
