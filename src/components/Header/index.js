@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import SearchBar from './SearchBar';
 
-// TODO: Pegar a foto de perfil do context
-
-export const Header = () => {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -36,7 +34,7 @@ export const Header = () => {
       )}
     </>
   );
-};
+}
 
 const Container = styled.header`
   display: flex;
