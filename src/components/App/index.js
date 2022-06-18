@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
 import '../../assets/styles/reset.css';
 import GlobalStyle from '../../globalStyles';
@@ -9,9 +10,14 @@ import Timeline from '../Timeline';
 import UserProfile from '../UserProfile';
 import Hashtag from '../Hashtag';
 
+import DataContext from '../context/context.js';
+
 export default function App() {
+
+  const [data, setData] = useState({})
+
   return (
-    <>
+    <DataContext.Provider value={{data, setData}}>
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
@@ -22,6 +28,6 @@ export default function App() {
           <Route path="/hashtag/:hashtagName" element={<Hashtag />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </DataContext.Provider>
   );
 }

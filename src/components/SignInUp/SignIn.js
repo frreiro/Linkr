@@ -28,11 +28,12 @@ export default function SignIn() {
 
         const promisse = axios.post(url, data)
         promisse.then(response => {
-            const { token } = response.data
+
+
+            const token = response.data
             localStorage.setItem("token", token)
-            alert(response.data)
+            navigate("/timeline")
             setButt("Log In")
-            // navigate("/")
         })
         promisse.catch(e => {
             alert(e.response.data)
@@ -55,6 +56,7 @@ export default function SignIn() {
                     <input type="password"
                         value={password}
                         disabled={butt !== "Log In" ? true : false}
+
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
                     ></input>
@@ -62,7 +64,6 @@ export default function SignIn() {
                     <button disabled={butt !== "Log In" ? true : false} 
                             type="submit">{butt}
                     </button>
-
                     <Link to="/sign-up">First time? create an account!</Link>
                 </form>
             </Container>
