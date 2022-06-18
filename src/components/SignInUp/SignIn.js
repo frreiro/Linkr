@@ -33,7 +33,6 @@ export default function SignIn() {
             const token = response.data
             localStorage.setItem("token", token)
             navigate("/timeline")
-            alert(response.data)
             setButt("Log In")
         })
         promisse.catch(e => {
