@@ -2,16 +2,19 @@
 import styled from 'styled-components';
 import PublishPost from "../PublishPost";
 import Post from '../Post';
+import Trending from '../Trending';
 
 export default function Main({ pageTitle, posts, response }) {
   const isTimeline = window.location.pathname === "/timeline" ? <PublishPost /> : <></>
+  const isMobile = window.innerWidth !== 375 ? <Trending /> : <></>
+
 
   return (
     <>
       <Container>
-        <h1 className='title'>{pageTitle}</h1>
-        {isTimeline}
         <div>
+          <h1 className='title'>{pageTitle}</h1>
+          {isTimeline}
           {posts.length > 0
             ? posts.map((post) => {
               return (
@@ -26,6 +29,7 @@ export default function Main({ pageTitle, posts, response }) {
             })
             : response}
         </div>
+        {isMobile}
       </Container>
     </>
   );
@@ -35,27 +39,28 @@ export default function Main({ pageTitle, posts, response }) {
 
 const Container = styled.div`
   width: 100vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-
+  justify-content: center;
+  
   .title {
-    width: calc(100vw - 17px);
     font-family: 'Oswald';
     font-size: 33px;
     font-weight: 700;
     color: #fff;
-    margin-top: 19px;
     margin-left: 17px;
+    margin-top: 19px;
     margin-bottom: 19px;
   }
-
+  
 
   @media (min-width: 376px) {
+    flex-direction: row;
+
     .title {
       margin-top: 78px;
       margin-bottom: 43px;
+      margin-left: 0px;
       width: 611px;
       font-size: 43px;
     }
