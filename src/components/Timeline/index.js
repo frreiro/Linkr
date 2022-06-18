@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
 import PublishPost from "../PublishPost";
 import Header from '../Header';
 import Post from '../Post';
+import DataContext from '../context/context.js';
 
 export default function Timeline() {
 
@@ -30,6 +31,7 @@ export default function Timeline() {
         axios.get("http://localhost:5000/data", config)
         .then(promise => {
             setData(promise.data)
+            console.log(promise.data)
         })
         .catch(e => alert(e));
     },[])

@@ -8,6 +8,7 @@ import SignIn from '../SignInUp/SignIn';
 import SignUp from '../SignInUp/SignUp';
 import Timeline from '../Timeline';
 import UserProfile from '../UserProfile';
+import DataContext from '../context/context.js';
 
 export default function App() {
 
