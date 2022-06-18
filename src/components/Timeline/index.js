@@ -16,7 +16,7 @@ export default function Timeline() {
     const [posts, setPosts] = useState([])
     const [response, setResponse] = useState(loader)
     const [refresh, setRefresh] = useState(false)
-
+    //TODO: pegar o token corretamente
     const token = localStorage.getItem('token')
 
     const config = {
