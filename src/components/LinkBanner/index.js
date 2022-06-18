@@ -29,6 +29,7 @@ const Banner = styled.div`
         flex-direction: column;
         padding: 24px 160px 23px 19px;
         justify-content: space-between;
+        overflow: hidden;
         h1{ 
             word-break: break-word;
             font-size: 11px;
