@@ -32,7 +32,7 @@ export default function SignIn() {
             localStorage.setItem("token", token)
             alert(response.data)
             setButt("Log In")
-            // navigate("/")
+            navigate("/home")
         })
         promisse.catch(e => {
             alert(e.response.data)

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import SearchBar from './SearchBar';
 
 // TODO: Pegar a foto de perfil do context
 
@@ -18,6 +19,7 @@ export const Header = () => {
     <>
       <Container>
         <h1>linkr</h1>
+        <SearchBar />
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <FaChevronUp /> : <FaChevronDown />}
           <img
@@ -48,6 +50,10 @@ const Container = styled.header`
     font-weight: 700;
     font-size: 3rem;
     margin-left: 1.5rem;
+  }
+  input{
+    width: 563px;
+    height: 45px;
   }
   div {
     display: flex;
