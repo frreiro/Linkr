@@ -1,3 +1,9 @@
+import { useEffect, useState } from "react";
+import { useContext } from "react";
+import DataContext from "../context/context";
+import styled from "styled-components"
+import axios from 'axios'
+import { Oval } from "react-loader-spinner";
 
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -19,6 +25,7 @@ export default function Timeline() {
     //TODO: pegar o token corretamente
 
     const token = localStorage.getItem('token')
+    const {data, setData} = useContext(DataContext)
 
     const config = {
         headers: {
@@ -26,6 +33,18 @@ export default function Timeline() {
         }
     }
 
+<<<<<<< HEAD
+=======
+    useEffect(() => {
+        axios.get("http://localhost:5000/data", config)
+        .then(promise => {
+            setData(promise.data)
+        })
+        .catch(e => alert(e));
+    },[])
+
+    //TODO: fazer as requisições constantementes
+>>>>>>> 70e3dcf85a9ff7e3c62a02bd08b2191a3c8e83e1
     useEffect(() => {
         axios.get('http://localhost:5000/timeline', config)
             .then(promise => {

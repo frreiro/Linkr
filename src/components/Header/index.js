@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import DataContext from '../context/context';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
