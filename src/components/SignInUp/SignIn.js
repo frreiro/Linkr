@@ -33,11 +33,8 @@ export default function SignIn() {
             const token = response.data
             localStorage.setItem("token", token)
             navigate("/timeline")
-            const { token } = response.data
-            localStorage.setItem("token", token)
             alert(response.data)
             setButt("Log In")
-            // navigate("/")
         })
         promisse.catch(e => {
             alert(e.response.data)
@@ -50,9 +47,6 @@ export default function SignIn() {
             <Header />
             <Container>
                 <form onSubmit={logInUser}>
-
-                    <input type="text"
-                        value={email}
                     <input type="text"
                         value={email}
                         disabled={butt !== "Log In" ? true : false}
@@ -68,8 +62,6 @@ export default function SignIn() {
                         placeholder="Password"
                     ></input>
 
-
-                    <button type="submit">Log In</button>
                     <button disabled={butt !== "Log In" ? true : false} 
                             type="submit">{butt}
                     </button>
