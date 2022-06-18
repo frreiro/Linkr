@@ -24,7 +24,7 @@ export default function Trending() {
             .catch((e) => console.log(e))
     }, [])
 
-
+    //TODO: clique para a tela de hashtags
     return (
         <Topics>
             <h1>trending</h1>
@@ -45,13 +45,14 @@ const Topics = styled.div`
     border-radius: 16px;
     margin-top: 160px;
     margin-left: 25px;
+
     
     h1{
         font-family: 'Oswald';
         font-weight: 700;
         font-size: 27px;
         color: #fff;
-        margin-top: 9px;
+        margin-top: 12px;
         margin-left: 16px;
         margin-bottom: 12px;
     }
@@ -69,14 +70,14 @@ const Topics = styled.div`
 
 const Hashtags = styled.div`
 
-    margin-top: 22px;
-    margin-left: 16px;
+    margin-top: 20px;
+    margin-left: 18px;
 
     p{
         font-family: 'Lato';
         font-style: normal;
         font-weight: 700;
-        font-size: 19px;
+        font-size: 18px;
         margin-bottom: 15px;
     }
 
