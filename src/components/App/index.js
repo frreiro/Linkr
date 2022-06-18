@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
 import GlobalStyle from '../../globalStyles';
 import { Home } from "../../pages/Home";
@@ -8,10 +9,14 @@ import Timeline from "../Timeline"
 
 import "../../assets/reset.css"
 import "../../assets/styles/reset.css"
+import DataContext from "../context/context";
 
 export default function App() {
+
+  const [data, setData] = useState({})
+
   return (
-    <>
+    <DataContext.Provider value={{data, setData}}>
       <GlobalStyle />
       <BrowserRouter>
         <Routes>
@@ -21,6 +26,6 @@ export default function App() {
           <Route path="/timeline" element={<Timeline />} />
         </Routes>
       </BrowserRouter>
-    </>
+    </DataContext.Provider>
   );
 }

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { useContext } from "react";
+import DataContext from "../context/context";
 import styled from "styled-components"
 import axios from 'axios'
 import { Oval } from "react-loader-spinner";
@@ -19,12 +21,21 @@ export default function Timeline() {
     const [refresh, setRefresh] = useState(0)
 
     const token = localStorage.getItem('token')
+    const {data, setData} = useContext(DataContext)
 
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
         }
     }
+
+    useEffect(() => {
+        axios.get("http://localhost:5000/data", config)
+        .then(promise => {
+            setData(promise.data)
+        })
+        .catch(e => alert(e));
+    },[])
 
     //TODO: fazer as requisições constantementes
     useEffect(() => {
