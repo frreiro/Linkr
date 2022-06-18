@@ -15,6 +15,7 @@ export default function Timeline() {
 
     const [posts, setPosts] = useState([])
     const [response, setResponse] = useState(loader)
+    const [refresh, setRefresh] = useState(false)
 
     const token = localStorage.getItem('token')
 
@@ -24,20 +25,19 @@ export default function Timeline() {
         }
     }
 
-    //TODO: fazer as requisições constantementes
     useEffect(() => {
         axios.get('http://localhost:5000/timeline', config)
             .then(promise => {
                 promise.data.length !== 0 ? setPosts(promise.data) : setResponse(notFound)
+                setTimeout(() => setRefresh(!refresh), 5000)
             })
             .catch(e => setResponse(errorMessage));
-    }, [])
+    }, [refresh])
+
 
     if (posts.length > 0 && Object.keys(posts[0]).length < 0) {
         setResponse(notFound)
     }
-
-
     return (
         <>
             <Header />
