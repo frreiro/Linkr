@@ -1,12 +1,15 @@
-import { useEffect, useState } from "react";
-import styled from "styled-components"
-import axios from 'axios'
-import { Oval } from "react-loader-spinner";
 
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
+import { Oval } from 'react-loader-spinner';
 import { Header } from "../Header";
 import PublishPost from "../PublishPost";
 import Post from "../Post";
 
+
+import Header from '../Header';
+import Post from '../Post';
 
 export default function Timeline() {
 
@@ -64,33 +67,32 @@ export default function Timeline() {
     )
 }
 
-
 const Container = styled.div`
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    margin-top: 78px;
-    align-items: center;
-    
-    .timeline{
-        width: calc(100vw - 17px);
-        font-family: 'Oswald';
-        font-size: 43px;
-        font-weight: 700;
-        color: #fff;
-        margin-left: 17px;
-        margin-bottom: 43px;
-    }
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 78px;
+  align-items: center;
 
-    .response{
-        text-align: center
-        /* margin-left: 17px; */
-    }
+  .timeline {
+    width: calc(100vw - 17px);
+    font-family: 'Oswald';
+    font-size: 43px;
+    font-weight: 700;
+    color: #fff;
+    margin-left: 17px;
+    margin-bottom: 43px;
+  }
 
-    @media(min-width: 376px){
-        .timeline{
-            width: 611px;
-        }
+  .response {
+    text-align: center;
+    /* margin-left: 17px; */
+  }
+
+  @media (min-width: 376px) {
+    .timeline {
+      width: 611px;
     }
-`
+  }
+`;
