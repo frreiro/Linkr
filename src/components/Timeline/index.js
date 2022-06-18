@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
-import { useContext } from "react";
-import DataContext from "../context/context";
-import styled from "styled-components"
-import axios from 'axios'
-import { Oval } from "react-loader-spinner";
-
-import { Header } from "../Header";
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import axios from 'axios';
+import { Oval } from 'react-loader-spinner';
 import PublishPost from "../PublishPost";
-import Post from "../Post";
-
+import Header from '../Header';
+import Post from '../Post';
 
 export default function Timeline() {
 
@@ -18,7 +14,8 @@ export default function Timeline() {
 
     const [posts, setPosts] = useState([])
     const [response, setResponse] = useState(loader)
-    const [refresh, setRefresh] = useState(0)
+    const [refresh, setRefresh] = useState(false)
+    //TODO: pegar o token corretamente
 
     const token = localStorage.getItem('token')
     const {data, setData} = useContext(DataContext)
@@ -29,6 +26,7 @@ export default function Timeline() {
         }
     }
 
+<<<<<<< HEAD
     useEffect(() => {
         axios.get("http://localhost:5000/data", config)
         .then(promise => {
@@ -38,10 +36,13 @@ export default function Timeline() {
     },[])
 
     //TODO: fazer as requisições constantementes
+=======
+>>>>>>> main
     useEffect(() => {
         axios.get('http://localhost:5000/timeline', config)
             .then(promise => {
                 promise.data.length !== 0 ? setPosts(promise.data) : setResponse(notFound)
+                setTimeout(() => setRefresh(!refresh), 5000)
             })
             .catch(e => setResponse(errorMessage));
     }, [refresh])
@@ -49,8 +50,6 @@ export default function Timeline() {
     if (posts.length > 0 && Object.keys(posts[0]).length < 0) {
         setResponse(notFound)
     }
-
-
     return (
         <>
             <Header />
@@ -58,7 +57,7 @@ export default function Timeline() {
                 <div className="timeline">
                     <h1>timeline</h1>
                 </div>
-                <PublishPost refresher={() => setRefresh(refresh + 1)}/>
+                <PublishPost refresher={() => setRefresh(!refresh)} />
                 {posts.length > 0 && Object.keys(posts[0]).length > 0 ? posts.map((post) => {
                     return (
                         <Post
@@ -76,33 +75,32 @@ export default function Timeline() {
     )
 }
 
-
 const Container = styled.div`
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    margin-top: 78px;
-    align-items: center;
-    
-    .timeline{
-        width: calc(100vw - 17px);
-        font-family: 'Oswald';
-        font-size: 43px;
-        font-weight: 700;
-        color: #fff;
-        margin-left: 17px;
-        margin-bottom: 43px;
-    }
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 78px;
+  align-items: center;
 
-    .response{
-        text-align: center
-        /* margin-left: 17px; */
-    }
+  .timeline {
+    width: calc(100vw - 17px);
+    font-family: 'Oswald';
+    font-size: 43px;
+    font-weight: 700;
+    color: #fff;
+    margin-left: 17px;
+    margin-bottom: 43px;
+  }
 
-    @media(min-width: 376px){
-        .timeline{
-            width: 611px;
-        }
+  .response {
+    text-align: center;
+    /* margin-left: 17px; */
+  }
+
+  @media (min-width: 376px) {
+    .timeline {
+      width: 611px;
     }
-`
+  }
+`;
