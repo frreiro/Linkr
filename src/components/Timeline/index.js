@@ -63,6 +63,7 @@ export default function Timeline() {
                     return (
                         <Post
                             key={post.id}
+                            id={post.id}
                             userImage={post.userImage}
                             userName={post.userName}
                             postDescription={post.postDescription}
