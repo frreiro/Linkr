@@ -17,7 +17,6 @@ export default function Trending() {
 
 
     const [hashtags, setHashtags] = useState("");
-    console.log(hashtags)
 
 
     useEffect(() => {
