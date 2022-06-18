@@ -24,7 +24,7 @@ export default function Timeline() {
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${123}`
+            Authorization: `Bearer ${token}`
         }
     }
 
@@ -33,7 +33,7 @@ export default function Timeline() {
         .then(promise => {
             setData(promise.data)
         })
-        .catch(e => alert(e));
+        .catch(e => console.log(e));
     },[])
 
     //TODO: fazer as requisições constantementes

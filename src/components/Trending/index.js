@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import DataContext from '../context/context.js';
 
 export default function Trending() {
 
     //TODO: pegar o token corretamente
     const token = localStorage.getItem('token')
+    const {data, setData} = useContext(DataContext)
 
     const config = {
         headers: {
-            "Authorization": `Bearer ${123}`
+            Authorization: `Bearer ${token}`
         }
     }
 
