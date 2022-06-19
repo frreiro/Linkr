@@ -9,6 +9,8 @@ import LinkBanner from '../LinkBanner';
 import DataContext from '../context/context.js';
 
 export default function Post(props) {
+  const navigate = useNavigate();
+
   const URL = `http://localhost:5000/posts/${props.id}`;
 
   const { data, setData } = useContext(DataContext);
@@ -23,8 +25,13 @@ export default function Post(props) {
 
   function redirectToUserProfile() {
     const { userId } = props;
-    navigate(`/users/${userId}`, { state: { userId } });
+    navigate(`/users/${userId}`);
   }
+
+  const handleHashtagClick = (hashtagName) => {
+    const hashtag = hashtagName.replace('#', '');
+    navigate(`/hashtag/${hashtag}`, { state: { hashtag } });
+  };
 
   const setTextRef = (data) => {
     editedTextRef.current = data;
@@ -88,13 +95,6 @@ export default function Post(props) {
     }
   }, [editing]);
 
-  const navigate = useNavigate();
-
-  const handleClick = (hashtagName) => {
-    const hashtag = hashtagName.replace('#', '');
-    navigate(`/hashtag/${hashtag}`, { state: { hashtag } });
-  };
-
   return (
     <Banner>
       <ProfilePic src={props.userImage} />
@@ -130,7 +130,7 @@ export default function Post(props) {
           />
         ) : (
           <p className="description">
-            <ReactHashtag onHashtagClick={handleClick}>
+            <ReactHashtag onHashtagClick={handleHashtagClick}>
               {props.postDescription}
             </ReactHashtag>
           </p>
