@@ -20,6 +20,8 @@ export default function Main({ pageTitle, posts, response }) {
               return (
                 <Post
                   key={post.id}
+                  id={post.id}
+                  userId={post.userId}
                   userImage={post.userImage}
                   userName={post.userName}
                   postDescription={post.postDescription}
