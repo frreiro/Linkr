@@ -17,10 +17,9 @@ export default function Timeline() {
     const [response, setResponse] = useState(loader)
     const [refresh, setRefresh] = useState(false)
 
-    //TODO: pegar o token corretamente
 
     const token = localStorage.getItem('token')
-    const {data, setData} = useContext(DataContext)
+    const { data, setData } = useContext(DataContext)
 
     const config = {
         headers: {
@@ -30,13 +29,12 @@ export default function Timeline() {
 
     useEffect(() => {
         axios.get("http://localhost:5000/data", config)
-        .then(promise => {
-            setData(promise.data)
-        })
-        .catch(e => console.log(e));
-    },[])
+            .then(promise => {
+                setData(promise.data)
+            })
+            .catch(e => console.log(e));
+    }, [])
 
-    //TODO: fazer as requisições constantementes
     useEffect(() => {
         axios.get('http://localhost:5000/timeline', config)
             .then(promise => {
@@ -54,7 +52,6 @@ export default function Timeline() {
             <Header />
             <Main pageTitle={"timeline"} posts={posts} response={response} />
         </>
-
     )
 }
 const errorCase = styled.h1`
