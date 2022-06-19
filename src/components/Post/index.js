@@ -109,12 +109,11 @@ export default function Post(props) {
             defaultValue={props.postDescription}
             onFocus={(e)=>e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)} 
             onChange={(e) => setTextRef(e.target.value)} />
-            : <p className="description">{props.postDescription}</p>
-        }
-
-        <p className="description">
-          <ReactHashtag onHashtagClick={handleClick}>{props.postDescription}</ReactHashtag>
-        </p>
+            : 
+            <p className="description">
+              <ReactHashtag onHashtagClick={handleClick}>{props.postDescription}</ReactHashtag>
+            </p>
+        }        
       </Userinfo>
       <LinkBanner link={props.linkInfos} />
     </Banner>
