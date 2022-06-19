@@ -1,3 +1,5 @@
+import ReactHashtag from '@mdnm/react-hashtag';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useContext, useState, useEffect, useRef } from 'react'
@@ -82,6 +84,13 @@ export default function Post(props) {
     }
   }, [editing])
 
+  const navigate = useNavigate();
+
+  const handleClick = (hashtagName) => {
+    const hashtag = hashtagName.replace('#', '');
+    navigate(`/hashtag/${hashtag}`, { state: { hashtag } });
+  };
+
   return (
     <Banner>
       <ProfilePic src={props.userImage} />
@@ -102,6 +111,10 @@ export default function Post(props) {
             onChange={(e) => setTextRef(e.target.value)} />
             : <p className="description">{props.postDescription}</p>
         }
+
+        <p className="description">
+          <ReactHashtag onHashtagClick={handleClick}>{props.postDescription}</ReactHashtag>
+        </p>
       </Userinfo>
       <LinkBanner link={props.linkInfos} />
     </Banner>
@@ -169,6 +182,10 @@ const Userinfo = styled.div`
     font-size: 15px;
     color: #b7b7b7;
     margin-top: 7px;
+
+    span {
+      font-weight: 700;
+    }
   }
 
   @media (min-width: 376px) {
