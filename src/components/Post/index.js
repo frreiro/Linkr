@@ -1,13 +1,107 @@
 import styled from 'styled-components';
+import axios from 'axios';
+import { useContext, useState, useEffect, useRef } from 'react'
+import {BsPencilFill} from "react-icons/bs"
+
 import LinkBanner from '../LinkBanner';
+import DataContext from '../context/context.js';
 
 export default function Post(props) {
+  const URL = `http://localhost:5000/posts/${props.id}`
+
+  const {data, setData} = useContext(DataContext)
+  const username = data.name
+  const token = localStorage.getItem("token")
+
+  const [editing, setEditing] = useState(false)
+  const [editedText, setEditedText] = useState(props.postDescription)
+  const [disabled, setDisabled] = useState(false)
+  const inputRef = useRef(null)
+  const editedTextRef = useRef(editedText)
+  
+  const setTextRef = (data) => {
+    editedTextRef.current = data;
+    setEditedText(data)
+  }
+
+  const handler = (e) => {
+    if (e.key === "Escape") {
+      setEditing(false)
+      setEditedText("")
+    }
+
+    if (e.key === "Enter") {
+      disableAndSend()
+    }
+  }
+
+  function disableAndSend() {
+    setDisabled(true)
+
+    if (editedTextRef.current === props.postDescription) {
+      setEditing(false)
+      setDisabled(false)
+    } else {
+      sendPost()
+    }
+  }
+
+  function sendPost() {
+    const bodyData = {
+      username,
+      description: editedTextRef.current
+    }
+
+    const userData = {
+      headers: {
+          Authorization: `Bearer ${token}`,
+      }
+    }
+
+    const promise = axios.put(URL, bodyData, userData)
+
+    promise.catch(err => {
+      alert("Houve um erro ao editar sua publicação.")
+      setDisabled(false)
+    })
+
+    promise.then(response => {
+      setDisabled(false)
+      setEditing(false)
+    })
+
+  }
+
+  useEffect(() => {
+    if (editing) {
+      inputRef.current.focus();
+      const actual = inputRef.current
+
+      actual.addEventListener('keydown', handler)
+      return () => actual.removeEventListener('keydown', handler)
+    }
+  }, [editing])
+
   return (
     <Banner>
       <ProfilePic src={props.userImage} />
+      <EditContainer>
+        {props.userId === data.id ? <BsPencilFill onClick={() => {
+          setEditing(!editing)
+          setTextRef(props.postDescription)  
+        }}/> : ""}
+      </EditContainer>
       <Userinfo>
         <h1 className="name">{props.userName}</h1>
-        <p className="description">{props.postDescription}</p>
+        {editing ? 
+          <textarea style={disabled ? {opacity: '0.5'} : {}}
+            disabled={disabled ? "disabled" : ""}
+            ref={inputRef} 
+            defaultValue={props.postDescription}
+            onFocus={(e)=>e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)} 
+            onChange={(e) => setTextRef(e.target.value)} />
+            : <p className="description">{props.postDescription}</p>
+        }
       </Userinfo>
       <LinkBanner link={props.linkInfos} />
     </Banner>
@@ -31,6 +125,16 @@ const Banner = styled.div`
     height: 276px;
     border-radius: 16px;
     padding: 19px 23px 20px 86px;
+  }
+
+  textarea {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
+    color: #4c4c4c;
+    background: #FFFFFF;
+    border-radius: 7px;
+    padding: 9px;
   }
 `;
 const ProfilePic = styled.div`
@@ -76,3 +180,9 @@ const Userinfo = styled.div`
     }
   }
 `;
+
+const EditContainer = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 30px;
+`

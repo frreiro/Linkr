@@ -82,7 +82,7 @@ const Banner = styled.div`
         }
         img{
             width: 155px;
-            height: 155px;
+            height: 100%;
         }
     }
 `
