@@ -2,8 +2,6 @@ import { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
-import PublishPost from "../PublishPost";
-import Header from '../Header';
 import Main from '../Main';
 import DataContext from '../context/context.js';
 

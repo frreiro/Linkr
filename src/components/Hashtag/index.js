@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
-import Header from '../Header';
 import Main from '../Main';
 
 export default function Hashtag() {
@@ -27,7 +26,6 @@ export default function Hashtag() {
 
   const [posts, setPosts] = useState([])
   const [response, setResponse] = useState(loader)
-  console.log(posts)
 
   useEffect(() => {
     axios.get(`http://localhost:5000/hashtags/${hashtag}`, config)

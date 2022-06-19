@@ -2,7 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
 
-import Header from '../Header';
 import Main from '../Main';
 
 export default function UserProfile() {
