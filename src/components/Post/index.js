@@ -1,35 +1,8 @@
 import styled from 'styled-components'
 import LinkBanner from '../LinkBanner'
-import liked from "../../assets/images/redhearth.png"
-import unLike from "../../assets/images/hearth.png"
-import { useState } from 'react'
-import axios from 'axios'
-
+import Like from './Likes'
 
 export default function Post(props) {
-
-    const [like, setLike] = useState(unLike)
-    const token = localStorage.getItem('token')
-    const config = {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    }
-
-    function action(postId){
-        const promisse = axios.post('http://localhost:5000/likes', {postId}, config)
-        .then(response =>{
-            if(like === unLike){
-                setLike(liked)
-            } else {
-                setLike(unLike)
-            }
-        })
-        .catch(e=>{
-            alert("ocorreu um erro ao curtir o post")
-        })
-    }
-
     return (
         <Banner>
             <ProfilePic src={props.userImage} />
@@ -37,9 +10,7 @@ export default function Post(props) {
                 <h1 className='name'>{props.userName}</h1>
                 <p className='description'>{props.postDescription}</p>
             </Userinfo>
-            <Like>
-                <img onClick={()=> action(props.id)} className='like' src={like}/>
-            </Like>
+            <Like postId={props.id}/>
             <LinkBanner link={props.linkInfos} />
         </Banner>
     )
@@ -107,13 +78,5 @@ const Userinfo = styled.div`
         .description{
             font-size: 17px;
         }
-    }
-`
-const Like = styled.div`
-    img{
-        position: absolute;
-        left: 28px;
-        top: 86px;
-        width: 25px;
     }
 `
