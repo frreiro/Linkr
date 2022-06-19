@@ -1,12 +1,13 @@
 
 import styled from 'styled-components';
+import MediaQuery from 'react-responsive'
+
 import PublishPost from "../PublishPost";
 import Post from '../Post';
 import Trending from '../Trending';
 
 export default function Main({ pageTitle, posts, response }) {
   const isTimeline = window.location.pathname === "/timeline" ? <PublishPost /> : <></>
-  const isMobile = window.innerWidth !== 375 ? <Trending /> : <></>
 
 
   return (
@@ -29,7 +30,9 @@ export default function Main({ pageTitle, posts, response }) {
             })
             : response}
         </div>
-        {isMobile}
+        <MediaQuery minWidth={1000}>
+          <Trending />
+        </MediaQuery>
       </Container>
     </>
   );
