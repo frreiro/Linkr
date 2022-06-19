@@ -5,6 +5,7 @@ import MediaQuery from 'react-responsive'
 import PublishPost from "../PublishPost";
 import Post from '../Post';
 import Trending from '../Trending';
+import Header from '../Header';
 
 export default function Main({ pageTitle, posts, response }) {
   const isTimeline = window.location.pathname === "/timeline" ? <PublishPost /> : <></>
@@ -12,6 +13,7 @@ export default function Main({ pageTitle, posts, response }) {
 
   return (
     <>
+      <Header />
       <Container>
         <div>
           <h1 className='title'>{pageTitle}</h1>

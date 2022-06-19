@@ -49,7 +49,6 @@ export default function UserProfile() {
 
   return (
     <>
-      <Header />
       <Main pageTitle={posts.username} posts={posts} response={response} />
     </>
   );

@@ -49,7 +49,6 @@ export default function Timeline() {
     }
     return (
         <>
-            <Header />
             <Main pageTitle={"timeline"} posts={posts} response={response} />
         </>
     )

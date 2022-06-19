@@ -41,7 +41,6 @@ export default function Hashtag() {
   }
   return (
     <>
-      <Header />
       <Main pageTitle={`# ${hashtag}`} posts={posts} response={response} />
     </>
   )
