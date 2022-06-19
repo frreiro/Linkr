@@ -20,6 +20,7 @@ export default function Main({ pageTitle, posts, response }) {
           {isTimeline}
           {posts.length > 0
             ? posts.map((post) => {
+              console.log(post)
               return (
                 <Post
                   key={post.id}

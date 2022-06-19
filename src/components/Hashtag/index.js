@@ -27,6 +27,7 @@ export default function Hashtag() {
 
   const [posts, setPosts] = useState([])
   const [response, setResponse] = useState(loader)
+  console.log(posts)
 
   useEffect(() => {
     axios.get(`http://localhost:5000/hashtags/${hashtag}`, config)
