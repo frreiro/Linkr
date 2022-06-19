@@ -2,87 +2,91 @@ import ReactHashtag from '@mdnm/react-hashtag';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useContext, useState, useEffect, useRef } from 'react'
-import {BsPencilFill} from "react-icons/bs"
+import { useContext, useState, useEffect, useRef } from 'react';
+import { BsPencilFill } from 'react-icons/bs';
 
 import LinkBanner from '../LinkBanner';
 import DataContext from '../context/context.js';
 
 export default function Post(props) {
-  const URL = `http://localhost:5000/posts/${props.id}`
+  const URL = `http://localhost:5000/posts/${props.id}`;
 
-  const {data, setData} = useContext(DataContext)
-  const username = data.name
-  const token = localStorage.getItem("token")
+  const { data, setData } = useContext(DataContext);
+  const username = data.name;
+  const token = localStorage.getItem('token');
 
-  const [editing, setEditing] = useState(false)
-  const [editedText, setEditedText] = useState(props.postDescription)
-  const [disabled, setDisabled] = useState(false)
-  const inputRef = useRef(null)
-  const editedTextRef = useRef(editedText)
-  
+  const [editing, setEditing] = useState(false);
+  const [editedText, setEditedText] = useState(props.postDescription);
+  const [disabled, setDisabled] = useState(false);
+  const inputRef = useRef(null);
+  const editedTextRef = useRef(editedText);
+
+  function redirectToUserProfile() {
+    const { userId } = props;
+    navigate(`/users/${userId}`, { state: { userId } });
+  }
+
   const setTextRef = (data) => {
     editedTextRef.current = data;
-    setEditedText(data)
-  }
+    setEditedText(data);
+  };
 
   const handler = (e) => {
-    if (e.key === "Escape") {
-      setEditing(false)
-      setEditedText("")
+    if (e.key === 'Escape') {
+      setEditing(false);
+      setEditedText('');
     }
 
-    if (e.key === "Enter") {
-      disableAndSend()
+    if (e.key === 'Enter') {
+      disableAndSend();
     }
-  }
+  };
 
   function disableAndSend() {
-    setDisabled(true)
+    setDisabled(true);
 
     if (editedTextRef.current === props.postDescription) {
-      setEditing(false)
-      setDisabled(false)
+      setEditing(false);
+      setDisabled(false);
     } else {
-      sendPost()
+      sendPost();
     }
   }
 
   function sendPost() {
     const bodyData = {
       username,
-      description: editedTextRef.current
-    }
+      description: editedTextRef.current,
+    };
 
     const userData = {
       headers: {
-          Authorization: `Bearer ${token}`,
-      }
-    }
+        Authorization: `Bearer ${token}`,
+      },
+    };
 
-    const promise = axios.put(URL, bodyData, userData)
+    const promise = axios.put(URL, bodyData, userData);
 
-    promise.catch(err => {
-      alert("Houve um erro ao editar sua publicação.")
-      setDisabled(false)
-    })
+    promise.catch((err) => {
+      alert('Houve um erro ao editar sua publicação.');
+      setDisabled(false);
+    });
 
-    promise.then(response => {
-      setDisabled(false)
-      setEditing(false)
-    })
-
+    promise.then((response) => {
+      setDisabled(false);
+      setEditing(false);
+    });
   }
 
   useEffect(() => {
     if (editing) {
       inputRef.current.focus();
-      const actual = inputRef.current
+      const actual = inputRef.current;
 
-      actual.addEventListener('keydown', handler)
-      return () => actual.removeEventListener('keydown', handler)
+      actual.addEventListener('keydown', handler);
+      return () => actual.removeEventListener('keydown', handler);
     }
-  }, [editing])
+  }, [editing]);
 
   const navigate = useNavigate();
 
@@ -95,25 +99,42 @@ export default function Post(props) {
     <Banner>
       <ProfilePic src={props.userImage} />
       <EditContainer>
-        {props.userId === data.id ? <BsPencilFill onClick={() => {
-          setEditing(!editing)
-          setTextRef(props.postDescription)  
-        }}/> : ""}
+        {props.userId === data.id ? (
+          <BsPencilFill
+            onClick={() => {
+              setEditing(!editing);
+              setTextRef(props.postDescription);
+            }}
+          />
+        ) : (
+          ''
+        )}
       </EditContainer>
       <Userinfo>
-        <h1 className="name">{props.userName}</h1>
-        {editing ? 
-          <textarea style={disabled ? {opacity: '0.5'} : {}}
-            disabled={disabled ? "disabled" : ""}
-            ref={inputRef} 
+        <h1 className="name" onClick={redirectToUserProfile}>
+          {props.userName}
+        </h1>
+        {editing ? (
+          <textarea
+            style={disabled ? { opacity: '0.5' } : {}}
+            disabled={disabled ? 'disabled' : ''}
+            ref={inputRef}
             defaultValue={props.postDescription}
-            onFocus={(e)=>e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)} 
-            onChange={(e) => setTextRef(e.target.value)} />
-            : 
-            <p className="description">
-              <ReactHashtag onHashtagClick={handleClick}>{props.postDescription}</ReactHashtag>
-            </p>
-        }        
+            onFocus={(e) =>
+              e.currentTarget.setSelectionRange(
+                e.currentTarget.value.length,
+                e.currentTarget.value.length
+              )
+            }
+            onChange={(e) => setTextRef(e.target.value)}
+          />
+        ) : (
+          <p className="description">
+            <ReactHashtag onHashtagClick={handleClick}>
+              {props.postDescription}
+            </ReactHashtag>
+          </p>
+        )}
       </Userinfo>
       <LinkBanner link={props.linkInfos} />
     </Banner>
@@ -144,7 +165,7 @@ const Banner = styled.div`
     height: auto;
     margin-top: 10px;
     color: #4c4c4c;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 7px;
     padding: 9px;
   }
@@ -201,4 +222,4 @@ const EditContainer = styled.div`
   position: absolute;
   top: 15px;
   right: 30px;
-`
+`;
