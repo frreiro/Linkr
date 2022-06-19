@@ -1,11 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
+import { useParams } from 'react-router';
 
 import Header from '../Header';
 import Main from '../Main';
 
 export default function UserProfile() {
+  const {userId} = useParams()
   const loader = (
     <Oval
       ariaLabel="loading-indicator"
@@ -31,7 +33,7 @@ export default function UserProfile() {
   React.useEffect(() => {
     const token = localStorage.getItem('token');
 
-    const URL = '';
+    const URL = `http://localhost:5000/posts/${userId}`
 
     const config = {
       headers: {
@@ -50,7 +52,7 @@ export default function UserProfile() {
   return (
     <>
       <Header />
-      <Main pageTitle={posts.username} posts={posts} response={response} />
+      <Main pageTitle={`${posts[0]?.userName}'s posts`} posts={posts} response={response} />
     </>
   );
 }
