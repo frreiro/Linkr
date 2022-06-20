@@ -16,8 +16,7 @@ export default function Like({ postId }) {
     const token = localStorage.getItem('token')
     const url = "/likes"
     const { data } = useContext(DataContext)
-    console.log(data)
-    
+
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -39,7 +38,7 @@ export default function Like({ postId }) {
             setLikedBy(filter(promisse.data, aux))
         } catch (error) {
             alert("ocorreu um erro")
-        }   
+        }
     }
 
     useEffect(() => {
@@ -80,7 +79,7 @@ export default function Like({ postId }) {
                 id={String(postId)}
                 getContent={() => {
                     return null
-                  }}
+                }}
             >
                 {<span>{likedBy}</span>}
             </ReactTooltip>
