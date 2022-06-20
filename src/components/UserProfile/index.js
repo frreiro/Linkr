@@ -1,10 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import { useLocation } from 'react-router';
 
 import { Oval } from 'react-loader-spinner';
 
 import Main from '../Main';
+import axiosInstance from '../../instances/axiosInstances';
 
 export default function UserProfile() {
   const location = useLocation();
@@ -43,7 +43,7 @@ export default function UserProfile() {
       },
     };
 
-    axios
+    axiosInstance
       .get(URL, config)
       .then((res) => {
         res.data.length !== 0

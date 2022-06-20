@@ -1,8 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { useNavigate } from 'react-router';
-import DataContext from '../context/context.js';
+import axiosInstance from "../../instances/axiosInstances";
+
 
 export default function Trending() {
 
@@ -20,7 +20,7 @@ export default function Trending() {
 
     const [hashtags, setHashtags] = useState("");
     useEffect(() => {
-        axios.get('http://localhost:5000/hashtags', config)
+        axiosInstance.get('/hashtags', config)
             .then(({ data }) => setHashtags(data))
             .catch((e) => console.log(e))
     }, [])

@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
 import Main from '../Main';
-
+import axiosInstance from '../../instances/axiosInstances';
 
 export default function Timeline() {
 
@@ -25,7 +24,7 @@ export default function Timeline() {
     }
 
     useEffect(() => {
-        axios.get('http://localhost:5000/timeline', config)
+        axiosInstance.get('/timeline', config)
             .then(promise => {
                 promise.data.length !== 0 ? setPosts(promise.data) : setResponse(notFound)
                 setTimeout(() => setRefresh(!refresh), 5000)

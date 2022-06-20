@@ -4,14 +4,13 @@ import LinkBanner from '../LinkBanner'
 import ReactHashtag from '@mdnm/react-hashtag';
 import { useNavigate } from 'react-router';
 import { BsPencilFill } from 'react-icons/bs';
-import axios from 'axios'
 import DataContext from '../context/context.js';
 import Like from './Likes';
+import axiosInstance from '../../instances/axiosInstances';
 
 export default function Post(props) {
   const navigate = useNavigate();
 
-  const URL = `http://localhost:5000/posts/${props.id}`;
 
   const { data, setData } = useContext(DataContext);
   const username = data.name;
@@ -72,7 +71,7 @@ export default function Post(props) {
       },
     };
 
-    const promise = axios.put(URL, bodyData, userData);
+    const promise = axiosInstance.put(`/posts/${props.id}`, bodyData, userData);
 
     promise.catch((err) => {
       alert('Houve um erro ao editar sua publicação.');
@@ -136,7 +135,7 @@ export default function Post(props) {
           </p>
         )}
       </Userinfo>
-      <Like postId={props.id}/>
+      <Like postId={props.id} />
       <LinkBanner link={props.linkInfos} />
     </Banner>
   );

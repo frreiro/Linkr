@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { useNavigate } from 'react-router';
 
 import Header from "./Header";
 import { Container } from './container';
 import { Desktop } from './container';
 import Loader from './Loader';
+import axiosInstance from '../../instances/axiosInstances';
 
 export default function SignIn() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [butt, setButt] = useState("Log In")
-    const url = "http://localhost:5000/signin"
     const navigate = useNavigate()
 
 
@@ -26,7 +25,7 @@ export default function SignIn() {
 
         setButt(Loader)
 
-        const promisse = axios.post(url, data)
+        const promisse = axiosInstance.post('/signin', data)
         promisse.then(response => {
 
 
@@ -61,8 +60,8 @@ export default function SignIn() {
                         placeholder="Password"
                     ></input>
 
-                    <button disabled={butt !== "Log In" ? true : false} 
-                            type="submit">{butt}
+                    <button disabled={butt !== "Log In" ? true : false}
+                        type="submit">{butt}
                     </button>
                     <Link to="/sign-up">First time? create an account!</Link>
                 </form>

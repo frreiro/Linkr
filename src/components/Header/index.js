@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import SearchBar from './SearchBar.js';
 import DataContext from '../context/context.js';
+import axiosInstance from '../../instances/axiosInstances.js';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -20,15 +21,14 @@ export default function Header() {
   React.useEffect(() => {
     const usertoken = localStorage.getItem('token');
 
-    const URL = 'http://localhost:5000/data';
     const config = {
       headers: {
         Authorization: `Bearer ${usertoken}`,
       },
     };
 
-    axios
-      .get(URL, config)
+    axiosInstance
+      .get('/data', config)
       .then((res) => {
         console.log('header', res.data);
         setUser(res.data);
