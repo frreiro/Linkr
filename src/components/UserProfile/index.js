@@ -4,7 +4,6 @@ import { useLocation } from 'react-router';
 
 import { Oval } from 'react-loader-spinner';
 
-import Header from '../Header';
 import Main from '../Main';
 
 export default function UserProfile() {
@@ -56,7 +55,6 @@ export default function UserProfile() {
 
   return (
     <>
-      <Header />
       <Main pageTitle={posts.username} posts={posts} response={response} />
     </>
   );
