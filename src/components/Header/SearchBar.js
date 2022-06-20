@@ -1,6 +1,7 @@
 import React from "react";
 import { DebounceInput } from "react-debounce-input";
 import axios from 'axios';
+import styled from "styled-components";
 
 export default function SearchBar(){
     const [value, setValue] = React.useState('');
@@ -15,32 +16,36 @@ export default function SearchBar(){
     function User({ image, id, name }){
         return(
             <div className="searchResult">
-                <image src={image} />
+                <img src={image} />
                 <p>{name}</p>
             </div>
         )
     }
 
     function Results(){
-        if(search === [] || value === ''){
+        if(search.length === 0 || value === ''){
+            console.log("entrou aqui");
             return(
-                <>
+                <div className="result">
                     <p>Sem resultados</p>
-                </>
+                </div>
             )
         } else {
             return(
-                <>
+                <div className="result">
                     {search.map((user) => <User image={user.image} id={user.id} name={user.userName}/>)}
-                </>
+                </div>
             )
         }
     }
     console.log(selected);
     return(
-        <>
+        <div className="searchBar">
             <DebounceInput type="text" placeholder="Search for People" minLength={3} debounceTimeout={300} value={value} onChange={e => setValue(e.target.value)} onFocus={e => setSelected(true)} onBlur={e => setSelected(false)}/>
-            <Results />
-        </>
+            <Results/>
+        </div>
     )
 }
+
+
+

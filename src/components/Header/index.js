@@ -27,7 +27,6 @@ export default function Header() {
           />
         </div>
       </Container>
-
       {isMenuOpen && (
         <Menu>
           <p onClick={handleLogout}>Logout</p>
@@ -54,6 +53,7 @@ const Container = styled.header`
     width: 563px;
     height: 45px;
     color: black;
+    position: relative;
   }
   div {
     display: flex;
@@ -69,6 +69,22 @@ const Container = styled.header`
       object-fit: cover;
       border-radius: 50%;
     }
+  }
+  .searchBar{
+    position: relative;
+  }
+  .result{
+    position: absolute;
+    top: 45px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 563px;
+    background-color: #e7e7e7;
+  }
+  .searchResult{
+
   }
 `;
 
