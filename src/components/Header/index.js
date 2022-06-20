@@ -7,13 +7,14 @@ import DataContext from '../context/context';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [focus, setFocus] = React.useState(false);
   const navigate = useNavigate();
 
   function handleLogout() {
     localStorage.removeItem('token');
     navigate('/');
   }
-
+  console.log(focus);
   return (
     <>
       <Container>
@@ -54,6 +55,7 @@ const Container = styled.header`
     height: 45px;
     color: black;
     position: relative;
+    border-radius: 8px;
   }
   div {
     display: flex;
@@ -75,16 +77,27 @@ const Container = styled.header`
   }
   .result{
     position: absolute;
-    top: 45px;
+    top: 38px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: flex-start;
     width: 563px;
     background-color: #e7e7e7;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
   .searchResult{
-
+    font-family: 'Lato';
+    font-size: 19px;
+    color: #515151;
+    margin-left: 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .searchResult img{
+    width: 35px;
+    height: 35px;
   }
 `;
 

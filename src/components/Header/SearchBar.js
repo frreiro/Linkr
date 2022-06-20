@@ -23,12 +23,16 @@ export default function SearchBar(){
     }
 
     function Results(){
-        if(search.length === 0 || value === ''){
-            console.log("entrou aqui");
+        if((search.length === 0 || value === '') && selected === true){
             return(
-                <div className="result">
+                <div className="result" selected={selected}>
                     <p>Sem resultados</p>
                 </div>
+            )
+        } else if (selected === false){
+            return(
+                <>
+                </>
             )
         } else {
             return(
@@ -38,14 +42,14 @@ export default function SearchBar(){
             )
         }
     }
-    console.log(selected);
     return(
         <div className="searchBar">
             <DebounceInput type="text" placeholder="Search for People" minLength={3} debounceTimeout={300} value={value} onChange={e => setValue(e.target.value)} onFocus={e => setSelected(true)} onBlur={e => setSelected(false)}/>
-            <Results/>
+            <Results />
         </div>
     )
 }
+
 
 
 
