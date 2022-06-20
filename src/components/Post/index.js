@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { BsPencilFill } from 'react-icons/bs';
 import axios from 'axios'
 import DataContext from '../context/context.js';
+import Like from './Likes';
 
 export default function Post(props) {
   const navigate = useNavigate();
@@ -135,6 +136,7 @@ export default function Post(props) {
           </p>
         )}
       </Userinfo>
+      <Like postId={props.id}/>
       <LinkBanner link={props.linkInfos} />
     </Banner>
   );
