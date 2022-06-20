@@ -1,23 +1,25 @@
 import React from "react";
 import { DebounceInput } from "react-debounce-input";
 import axios from 'axios';
-import styled from "styled-components";
+import { useNavigate } from "react-router";
 
 export default function SearchBar(){
     const [value, setValue] = React.useState('');
     const [search, setSearch] = React.useState([]);
     const [selected, setSelected] = React.useState(false);
+    const navigate = useNavigate();
     React.useEffect(() => {
         console.log("entrou no hook");
         let obj = {question: value};
         let promisse = axios.post("http://localhost:5000/search", obj);
         promisse.then((response) => setSearch(response.data));
     }, [value]);
+
     function User({ image, id, name }){
         return(
-            <div className="searchResult">
+            <div className="searchResult" onMouseDown={e => e.preventDefault()} onClick={()=>navigate(`/users/${id}`)}>
                 <img src={image} />
-                <p>{name}</p>
+                <p>{name}</p>                
             </div>
         )
     }
@@ -44,7 +46,7 @@ export default function SearchBar(){
     }
     return(
         <div className="searchBar">
-            <DebounceInput type="text" placeholder="Search for People" minLength={3} debounceTimeout={300} value={value} onChange={e => setValue(e.target.value)} onFocus={e => setSelected(true)} onBlur={e => setSelected(false)}/>
+            <DebounceInput type="text" placeholder="Search for People" minLength={3} debounceTimeout={300} value={value} onChange={e => setValue(e.target.value)} onFocus={e => setSelected(true)} onBlur={() => setSelected(false)}/>
             <Results />
         </div>
     )
