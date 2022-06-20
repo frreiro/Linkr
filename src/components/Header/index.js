@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import SearchBar from './SearchBar.js'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -17,7 +18,7 @@ export default function Header() {
   React.useEffect(() => {
     const usertoken = localStorage.getItem('token');
 
-    const URL = 'https://linkr-back-end.herokuapp.com/users/currentuser';
+    const URL = 'htpp://localhost:5000/current/users';
     const config = {
       headers: {
         Authorization: `Bearer ${usertoken}`,
