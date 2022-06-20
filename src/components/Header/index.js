@@ -41,7 +41,7 @@ export default function Header() {
     <>
       <Container>
         <h1 onClick={() => navigate('/')}>linkr</h1>
-        <SearchBar />
+        {/* <SearchBar /> */}
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <FaChevronUp /> : <FaChevronDown />}
           <img src={user?.image || ' '} alt="Foto do perfil" />

@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 import { useContext } from 'react'
 import DataContext from "../context/context";
-import axiosInstance from '../../instances/axiosInstances'
-
+import axios from 'axios'
 
 
 export default function Like({ postId }) {
@@ -14,10 +13,9 @@ export default function Like({ postId }) {
     const [likesCount, setLikesCount] = useState(null);
     const [likedBy, setLikedBy] = useState([])
     const token = localStorage.getItem('token')
-    const url = "/likes"
+    const url = "http://localhost:5000/likes"
     const { data } = useContext(DataContext)
-    console.log(data)
-    
+
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -28,7 +26,7 @@ export default function Like({ postId }) {
         let userName = data.name
         let aux = false
         try {
-            const promisse = await axiosInstance.get(`${url}/${postId}`, config)
+            const promisse = await axios.get(`${url}/${postId}`, config)
             for (let i = 0; i < promisse.data.length; i++) {
                 if (promisse.data[i] === userName) {
                     aux = true
@@ -39,7 +37,7 @@ export default function Like({ postId }) {
             setLikedBy(filter(promisse.data, aux))
         } catch (error) {
             alert("ocorreu um erro")
-        }   
+        }
     }
 
     useEffect(() => {
@@ -58,7 +56,7 @@ export default function Like({ postId }) {
 
     async function action(postId) {
         try {
-            const promisse = await axiosInstance.post(url, { postId }, config)
+            const promisse = await axios.post(url, { postId }, config)
             if (like === unLike) {
                 setLike(liked)
             } else {
@@ -80,7 +78,7 @@ export default function Like({ postId }) {
                 id={String(postId)}
                 getContent={() => {
                     return null
-                  }}
+                }}
             >
                 {<span>{likedBy}</span>}
             </ReactTooltip>
