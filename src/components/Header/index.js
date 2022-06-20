@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import SearchBar from './SearchBar.js';
+import DataContext from '../context/context.js';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -15,7 +16,7 @@ export default function Header() {
     localStorage.removeItem('url');
     navigate('/');
   }
-
+  const { setData } = React.useContext(DataContext)
   React.useEffect(() => {
     const usertoken = localStorage.getItem('token');
 
@@ -31,6 +32,7 @@ export default function Header() {
       .then((res) => {
         console.log('header', res.data);
         setUser(res.data);
+        setData(res.data)
       })
       .catch((err) => console.log(err));
   }, []);
