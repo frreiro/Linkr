@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import DataContext from '../context/context';
 
-// TODO: Pegar a foto de perfil do context
-
-export const Header = () => {
+export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [user, setUser] = React.useState(null);
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -15,16 +14,31 @@ export const Header = () => {
     navigate('/');
   }
 
+  React.useEffect(() => {
+    const usertoken = localStorage.getItem('token');
+
+    const URL = 'https://linkr-back-end.herokuapp.com/users/currentuser';
+    const config = {
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+      },
+    };
+
+    axios
+      .get(URL, config)
+      .then((res) => {
+        setUser(res.data); // { id, email, username, image }
+      })
+      .catch((err) => console.log(err));
+  });
+
   return (
     <>
       <Container>
         <h1>linkr</h1>
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <FaChevronUp /> : <FaChevronDown />}
-          <img
-            src="https://s2.glbimg.com/q1ZgqfWQGKQyxtRoMoRK03gMVfk=/0x0:959x540/600x0/smart/filters:gifv():strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/h/J/Ui4XL0So6yEilj6DeGXg/memedoge.jpg"
-            alt="Foto do perfil"
-          />
+          <img src={user?.image || ' '} alt="Foto do perfil" />
         </div>
       </Container>
 
@@ -35,7 +49,7 @@ export const Header = () => {
       )}
     </>
   );
-};
+}
 
 const Container = styled.header`
   display: flex;

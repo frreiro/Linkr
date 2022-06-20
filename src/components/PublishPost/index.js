@@ -1,30 +1,35 @@
 import styled from 'styled-components'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
+
+import DataContext from '../context/context.js';
 
 export default function PublishPost(props) {
     const URL = "http://localhost:5000/posts"
 
-    const {refresher} = props
-
     const [shareURL, setShareURL] = useState("")
     const [shareDescription, setShareDescription] = useState("")
     const [disabled, setDisabled] = useState(false)
+    const [required, setRequired] = useState(false)
+
+    const {data, setData} = useContext(DataContext)
 
     // TODO Get username, token and image from context/storage
-    const username = "tek"
-    const token = "efe4b76a-a6e7-43e1-b20d-e777f5ff9bd8"
-    const image = "https://pbs.twimg.com/profile_images/1389140738827501568/RUeCH5Dg_400x400.jpg"
+    const username = data.name
+    const token = localStorage.getItem("token")
+    const image = data.image
     
 
     function disableAndSend(e) {
         e.preventDefault()
         setDisabled(true)
+        setRequired(false)
 
-        if (shareURL) {
-            sendPost()
-        } else {
+        if (!shareURL) {
             setDisabled(false)
+            setRequired(true)
+        } else {
+            sendPost()
         }
     }
 
@@ -53,7 +58,6 @@ export default function PublishPost(props) {
             setShareURL("")
             setShareDescription("")
             setDisabled(false)
-            refresher()
         })
     }
 
@@ -67,9 +71,12 @@ export default function PublishPost(props) {
                 <Share>What are you going to share today?</Share>
                 <PostInfo>
                     <form onSubmit={disableAndSend} style={disabled ? {opacity: '0.5'} : {}} disabled={disabled ? "disabled" : ""}>
-                        <input type="text" 
+                        {required ? <p>Este campo é obrigatório</p> : ""}
+                        <input type="url" 
+                            style={required ? {boxShadow: "0 0 8px rgba(255, 0, 0, 0.6)"} : {}}
                             value={shareURL}
                             onChange={(e) => setShareURL(e.target.value)} 
+                            onFocus={() => setRequired(false)}
                             placeholder="http://..."
                             ></input>
                         <textarea type="text" 
@@ -162,7 +169,7 @@ const PostInfo = styled.div`
         margin-top: 5px;
         border-radius: 5px;
         background: #EFEFEF;
-    
+
         color: black;
         ::placeholder {
             color: #949494;
@@ -182,6 +189,12 @@ const PostInfo = styled.div`
         ::placeholder {
             color: #949494;
         }
+    }
+
+    p {
+        color: red;
+        font-size: 14px;
+        margin: 6px 0 0;
     }
 `
 
