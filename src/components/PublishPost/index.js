@@ -1,24 +1,23 @@
 import styled from 'styled-components'
 import React, { useState, useContext } from 'react'
-import axios from 'axios'
 
 import DataContext from '../context/context.js';
+import axiosInstance from '../../instances/axiosInstances.js';
 
 export default function PublishPost(props) {
-    const URL = "http://localhost:5000/posts"
 
     const [shareURL, setShareURL] = useState("")
     const [shareDescription, setShareDescription] = useState("")
     const [disabled, setDisabled] = useState(false)
     const [required, setRequired] = useState(false)
 
-    const {data, setData} = useContext(DataContext)
+    const { data, setData } = useContext(DataContext)
 
     // TODO Get username, token and image from context/storage
     const username = data.name
     const token = localStorage.getItem("token")
     const image = data.image
-    
+
 
     function disableAndSend(e) {
         e.preventDefault()
@@ -47,7 +46,7 @@ export default function PublishPost(props) {
             }
         }
 
-        const promise = axios.post(URL, bodyData, userData)
+        const promise = axiosInstance.post('/posts', bodyData, userData)
 
         promise.catch(err => {
             alert("Houve um erro ao publicar seu link.")
@@ -66,26 +65,26 @@ export default function PublishPost(props) {
             <ProfilePic>
                 <img src={image} />
             </ProfilePic>
-            
+
             <InfoContainer>
                 <Share>What are you going to share today?</Share>
                 <PostInfo>
-                    <form onSubmit={disableAndSend} style={disabled ? {opacity: '0.5'} : {}} disabled={disabled ? "disabled" : ""}>
+                    <form onSubmit={disableAndSend} style={disabled ? { opacity: '0.5' } : {}} disabled={disabled ? "disabled" : ""}>
                         {required ? <p>Este campo é obrigatório</p> : ""}
-                        <input type="url" 
-                            style={required ? {boxShadow: "0 0 8px rgba(255, 0, 0, 0.6)"} : {}}
+                        <input type="url"
+                            style={required ? { boxShadow: "0 0 8px rgba(255, 0, 0, 0.6)" } : {}}
                             value={shareURL}
-                            onChange={(e) => setShareURL(e.target.value)} 
+                            onChange={(e) => setShareURL(e.target.value)}
                             onFocus={() => setRequired(false)}
                             placeholder="http://..."
-                            ></input>
-                        <textarea type="text" 
+                        ></input>
+                        <textarea type="text"
                             value={shareDescription}
-                            onChange={(e) => setShareDescription(e.target.value)}  
-                            placeholder="Awesome article about #javascript" 
+                            onChange={(e) => setShareDescription(e.target.value)}
+                            placeholder="Awesome article about #javascript"
                             rows="3"
-                            ></textarea>
-                        
+                        ></textarea>
+
                         <Publish>
                             <button type="submit">{disabled ? "Publishing..." : "Publish"}</button>
                         </Publish>

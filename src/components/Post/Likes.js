@@ -2,10 +2,10 @@ import styled from 'styled-components'
 import liked from "../../assets/images/redhearth.png"
 import unLike from "../../assets/images/hearth.png"
 import { useEffect, useState } from 'react'
-import axios from 'axios'
 import ReactTooltip from 'react-tooltip'
 import { useContext } from 'react'
 import DataContext from "../context/context";
+import axiosInstance from '../../instances/axiosInstances'
 
 
 
@@ -14,7 +14,7 @@ export default function Like({ postId }) {
     const [likesCount, setLikesCount] = useState(null);
     const [likedBy, setLikedBy] = useState([])
     const token = localStorage.getItem('token')
-    const url = "http://localhost:5000/likes"
+    const url = "/likes"
     const { data } = useContext(DataContext)
 
 
@@ -28,7 +28,7 @@ export default function Like({ postId }) {
         let userName = data.name
         let aux = false
         try {
-            const promisse = await axios.get(`${url}/${postId}`, config)
+            const promisse = await axiosInstance.get(`${url}/${postId}`, config)
             for (let i = 0; i < promisse.data.length; i++) {
                 if (promisse.data[i] === userName) {
                     aux = true
@@ -58,7 +58,7 @@ export default function Like({ postId }) {
 
     async function action(postId) {
         try {
-            const promisse = await axios.post(url, { postId }, config)
+            const promisse = await axiosInstance.post(url, { postId }, config)
             if (like === unLike) {
                 setLike(liked)
             } else {

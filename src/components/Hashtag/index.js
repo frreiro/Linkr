@@ -1,9 +1,9 @@
 import { useLocation } from 'react-router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
 import Main from '../Main';
+import axiosInstance from '../../instances/axiosInstances';
 
 export default function Hashtag() {
   const location = useLocation();
@@ -28,7 +28,7 @@ export default function Hashtag() {
   const [response, setResponse] = useState(loader)
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/hashtags/${hashtag}`, config)
+    axiosInstance.get(`/hashtags/${hashtag}`, config)
       .then(promise => {
         promise.data.length !== 0 ? setPosts(promise.data) : setResponse(notFound)
       })
