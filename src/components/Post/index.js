@@ -7,6 +7,7 @@ import { BsPencilFill } from 'react-icons/bs';
 import DataContext from '../context/context.js';
 import Like from './Likes';
 import axiosInstance from '../../instances/axiosInstances';
+import Delete from './Delete';
 
 export default function Post(props) {
   const navigate = useNavigate();
@@ -136,6 +137,7 @@ export default function Post(props) {
         )}
       </Userinfo>
       <Like postId={props.id} />
+      <Delete />
       <LinkBanner link={props.linkInfos} />
     </Banner>
   );
