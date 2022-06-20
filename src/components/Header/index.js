@@ -3,8 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import SearchBar from './SearchBar.js'
-import DataContext from '../context/context.js';
+import SearchBar from './SearchBar.js';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -13,12 +12,13 @@ export default function Header() {
 
   function handleLogout() {
     localStorage.removeItem('token');
+    localStorage.removeItem('url');
     navigate('/');
   }
-  const { data, setData } = React.useContext(DataContext)
 
   React.useEffect(() => {
     const usertoken = localStorage.getItem('token');
+
     const URL = 'http://localhost:5000/data';
     const config = {
       headers: {
@@ -29,9 +29,8 @@ export default function Header() {
     axios
       .get(URL, config)
       .then((res) => {
-        setUser(res.data); // { id, email, username, image }
-        setData(res.data)
-
+        console.log('header', res.data);
+        setUser(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -39,7 +38,7 @@ export default function Header() {
   return (
     <>
       <Container>
-        <h1>linkr</h1>
+        <h1 onClick={() => navigate('/')}>linkr</h1>
         <SearchBar />
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <FaChevronUp /> : <FaChevronDown />}
@@ -68,7 +67,7 @@ const Container = styled.header`
     font-size: 3rem;
     margin-left: 1.5rem;
   }
-  input{
+  input {
     width: 563px;
     height: 45px;
     color: black;
@@ -90,10 +89,10 @@ const Container = styled.header`
       border-radius: 50%;
     }
   }
-  .searchBar{
+  .searchBar {
     position: relative;
   }
-  .result{
+  .result {
     position: absolute;
     top: 38px;
     display: flex;
@@ -105,7 +104,7 @@ const Container = styled.header`
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
-  .searchResult{
+  .searchResult {
     font-family: 'Lato';
     font-size: 19px;
     color: #515151;
@@ -113,7 +112,7 @@ const Container = styled.header`
     margin-top: 5px;
     margin-bottom: 5px;
   }
-  .searchResult img{
+  .searchResult img {
     width: 35px;
     height: 35px;
   }
