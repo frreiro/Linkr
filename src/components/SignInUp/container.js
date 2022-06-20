@@ -14,6 +14,9 @@ export const Container = styled.main`
         height: 55px;
         border: none;
         border-radius: 6px;
+        font-family: 'Oswald';
+        font-weight: 700;
+        font-size: 22px;
     }
     input::placeholder, button{
         font-family: 'Oswald';
