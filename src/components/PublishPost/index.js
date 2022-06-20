@@ -7,8 +7,6 @@ import DataContext from '../context/context.js';
 export default function PublishPost(props) {
     const URL = "http://localhost:5000/posts"
 
-    const {refresher} = props
-
     const [shareURL, setShareURL] = useState("")
     const [shareDescription, setShareDescription] = useState("")
     const [disabled, setDisabled] = useState(false)
@@ -60,7 +58,6 @@ export default function PublishPost(props) {
             setShareURL("")
             setShareDescription("")
             setDisabled(false)
-            refresher()
         })
     }
 

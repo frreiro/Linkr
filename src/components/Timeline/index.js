@@ -2,8 +2,6 @@ import { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
-import PublishPost from "../PublishPost";
-import Header from '../Header';
 import Main from '../Main';
 import DataContext from '../context/context.js';
 
@@ -17,10 +15,9 @@ export default function Timeline() {
     const [response, setResponse] = useState(loader)
     const [refresh, setRefresh] = useState(false)
 
-    //TODO: pegar o token corretamente
 
     const token = localStorage.getItem('token')
-    const {data, setData} = useContext(DataContext)
+    const { data, setData } = useContext(DataContext)
 
     const config = {
         headers: {
@@ -30,13 +27,12 @@ export default function Timeline() {
 
     useEffect(() => {
         axios.get("http://localhost:5000/data", config)
-        .then(promise => {
-            setData(promise.data)
-        })
-        .catch(e => console.log(e));
-    },[])
+            .then(promise => {
+                setData(promise.data)
+            })
+            .catch(e => console.log(e));
+    }, [])
 
-    //TODO: fazer as requisições constantementes
     useEffect(() => {
         axios.get('http://localhost:5000/timeline', config)
             .then(promise => {
@@ -51,10 +47,28 @@ export default function Timeline() {
     }
     return (
         <>
+
             <Header />
+            <Container>
+                <div className="timeline">
+                    <h1>timeline</h1>
+                </div>
+                <PublishPost refresher={() => setRefresh(refresh + 1)}/>
+                {posts.length > 0 && Object.keys(posts[0]).length > 0 ? posts.map((post) => {
+                    return (
+                        <Post
+                            key={post.id}
+                            id={post.id}
+                            userImage={post.userImage}
+                            userName={post.userName}
+                            postDescription={post.postDescription}
+                            linkInfos={post.linkInfo}
+                        />
+                    )
+                }) : response}
+            </Container>
             <Main pageTitle={"timeline"} posts={posts} response={response} />
         </>
-
     )
 }
 const errorCase = styled.h1`

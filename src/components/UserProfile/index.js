@@ -1,11 +1,15 @@
 import React from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router';
+
 import { Oval } from 'react-loader-spinner';
 
-import Header from '../Header';
 import Main from '../Main';
 
 export default function UserProfile() {
+  const location = useLocation();
+  const { userId } = location.state; // TODO: Pegar esse userId e fazer a requisição dos posts do usuário
+
   const loader = (
     <Oval
       ariaLabel="loading-indicator"
@@ -42,14 +46,15 @@ export default function UserProfile() {
     axios
       .get(URL, config)
       .then((res) => {
-        res.data.length !== 0 ? setPosts(res.data) : setResponse(notFoundMessage);
+        res.data.length !== 0
+          ? setPosts(res.data)
+          : setResponse(notFoundMessage);
       })
       .catch((e) => setResponse(errorMessage));
   }, []);
 
   return (
     <>
-      <Header />
       <Main pageTitle={posts.username} posts={posts} response={response} />
     </>
   );

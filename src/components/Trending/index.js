@@ -1,13 +1,15 @@
 import { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { useNavigate } from 'react-router';
 import DataContext from '../context/context.js';
 
 export default function Trending() {
 
     //TODO: pegar o token corretamente
     const token = localStorage.getItem('token')
-    const {data, setData} = useContext(DataContext)
+    const navigate = useNavigate();
+
 
     const config = {
         headers: {
@@ -17,22 +19,24 @@ export default function Trending() {
 
 
     const [hashtags, setHashtags] = useState("");
-
-
     useEffect(() => {
         axios.get('http://localhost:5000/hashtags', config)
             .then(({ data }) => setHashtags(data))
             .catch((e) => console.log(e))
     }, [])
 
-    //TODO: clique para a tela de hashtags
+
+    function clickHashtag(hashtag) {
+        navigate(`/hashtag/${hashtag}`, { state: { hashtag } });
+    }
+
     return (
         <Topics>
             <h1>trending</h1>
             <hr />
             <Hashtags>
                 {hashtags ? hashtags.map((item) => {
-                    return <p key={item.id}># {item.hashtag}</p>
+                    return <p key={item.id} onClick={() => clickHashtag(item.hashtag)}># {item.hashtag}</p>
                 }) : <></>}
             </Hashtags>
         </Topics>
@@ -73,13 +77,14 @@ const Hashtags = styled.div`
 
     margin-top: 20px;
     margin-left: 18px;
-
+    
     p{
         font-family: 'Lato';
         font-style: normal;
         font-weight: 700;
         font-size: 18px;
         margin-bottom: 15px;
+        cursor: pointer;
     }
 
 `

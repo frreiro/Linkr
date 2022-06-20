@@ -1,25 +1,31 @@
 
 import styled from 'styled-components';
+import MediaQuery from 'react-responsive'
+
 import PublishPost from "../PublishPost";
 import Post from '../Post';
 import Trending from '../Trending';
+import Header from '../Header';
 
 export default function Main({ pageTitle, posts, response }) {
   const isTimeline = window.location.pathname === "/timeline" ? <PublishPost /> : <></>
-  const isMobile = window.innerWidth !== 375 ? <Trending /> : <></>
 
 
   return (
     <>
+      <Header />
       <Container>
         <div>
           <h1 className='title'>{pageTitle}</h1>
           {isTimeline}
           {posts.length > 0
             ? posts.map((post) => {
+              console.log(post)
               return (
                 <Post
                   key={post.id}
+                  id={post.id}
+                  userId={post.userId}
                   userImage={post.userImage}
                   userName={post.userName}
                   postDescription={post.postDescription}
@@ -29,7 +35,9 @@ export default function Main({ pageTitle, posts, response }) {
             })
             : response}
         </div>
-        {isMobile}
+        <MediaQuery minWidth={1000}>
+          <Trending />
+        </MediaQuery>
       </Container>
     </>
   );

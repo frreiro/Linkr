@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 import Header from "./Header";
-import { Container } from './container';
+import { Container, Desktop } from './container';
 
 export default function SignUp(){
     const [email, setEmail] = React.useState('');
@@ -43,6 +43,7 @@ export default function SignUp(){
 
     return(
         <>
+            <Desktop>
             <Header />
             <Container>
                 <form onSubmit={sendObj}>
@@ -54,6 +55,7 @@ export default function SignUp(){
                     <Link to="/">Switch back to log in</Link>
                 </form>
             </Container>
+            </Desktop>
         </>
     );
 }
