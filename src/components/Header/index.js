@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import SearchBar from './SearchBar.js'
+import DataContext from '../context/context.js';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -14,11 +15,11 @@ export default function Header() {
     localStorage.removeItem('token');
     navigate('/');
   }
+  const { data, setData } = React.useContext(DataContext)
 
   React.useEffect(() => {
     const usertoken = localStorage.getItem('token');
-
-    const URL = 'htpp://localhost:5000/current/users';
+    const URL = 'http://localhost:5000/data';
     const config = {
       headers: {
         Authorization: `Bearer ${usertoken}`,
@@ -29,9 +30,11 @@ export default function Header() {
       .get(URL, config)
       .then((res) => {
         setUser(res.data); // { id, email, username, image }
+        setData(res.data)
+
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
 
   return (
     <>

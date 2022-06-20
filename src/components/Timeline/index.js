@@ -1,9 +1,8 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
 import Main from '../Main';
-import DataContext from '../context/context.js';
 
 export default function Timeline() {
 
@@ -17,21 +16,12 @@ export default function Timeline() {
 
 
     const token = localStorage.getItem('token')
-    const { data, setData } = useContext(DataContext)
 
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
-
-    useEffect(() => {
-        axios.get("http://localhost:5000/data", config)
-            .then(promise => {
-                setData(promise.data)
-            })
-            .catch(e => console.log(e));
-    }, [])
 
     useEffect(() => {
         axios.get('http://localhost:5000/timeline', config)
