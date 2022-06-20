@@ -36,12 +36,12 @@ export default function Header() {
     <>
       <Container>
         <h1>linkr</h1>
+        <SearchBar />
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <FaChevronUp /> : <FaChevronDown />}
           <img src={user?.image || ' '} alt="Foto do perfil" />
         </div>
       </Container>
-
       {isMenuOpen && (
         <Menu>
           <p onClick={handleLogout}>Logout</p>
@@ -64,6 +64,13 @@ const Container = styled.header`
     font-size: 3rem;
     margin-left: 1.5rem;
   }
+  input{
+    width: 563px;
+    height: 45px;
+    color: black;
+    position: relative;
+    border-radius: 8px;
+  }
   div {
     display: flex;
     align-items: center;
@@ -78,6 +85,33 @@ const Container = styled.header`
       object-fit: cover;
       border-radius: 50%;
     }
+  }
+  .searchBar{
+    position: relative;
+  }
+  .result{
+    position: absolute;
+    top: 38px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    width: 563px;
+    background-color: #e7e7e7;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+  .searchResult{
+    font-family: 'Lato';
+    font-size: 19px;
+    color: #515151;
+    margin-left: 12px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .searchResult img{
+    width: 35px;
+    height: 35px;
   }
 `;
 
