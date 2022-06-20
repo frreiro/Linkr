@@ -16,8 +16,8 @@ export default function Like({ postId }) {
     const token = localStorage.getItem('token')
     const url = "/likes"
     const { data } = useContext(DataContext)
-
-
+    console.log(data)
+    
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -39,12 +39,12 @@ export default function Like({ postId }) {
             setLikedBy(filter(promisse.data, aux))
         } catch (error) {
             alert("ocorreu um erro")
-        }
+        }   
     }
 
-    useEffect(async () => {
+    useEffect(() => {
         getlist()
-    }, [like])
+    }, [liked])
 
     function filter(names, aux) {
         if (names.length === 0) return null
@@ -78,6 +78,9 @@ export default function Like({ postId }) {
                 type="light"
                 place="bottom"
                 id={String(postId)}
+                getContent={() => {
+                    return null
+                  }}
             >
                 {<span>{likedBy}</span>}
             </ReactTooltip>
