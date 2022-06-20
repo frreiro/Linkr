@@ -47,6 +47,26 @@ export default function Timeline() {
     }
     return (
         <>
+
+            <Header />
+            <Container>
+                <div className="timeline">
+                    <h1>timeline</h1>
+                </div>
+                <PublishPost refresher={() => setRefresh(refresh + 1)}/>
+                {posts.length > 0 && Object.keys(posts[0]).length > 0 ? posts.map((post) => {
+                    return (
+                        <Post
+                            key={post.id}
+                            id={post.id}
+                            userImage={post.userImage}
+                            userName={post.userName}
+                            postDescription={post.postDescription}
+                            linkInfos={post.linkInfo}
+                        />
+                    )
+                }) : response}
+            </Container>
             <Main pageTitle={"timeline"} posts={posts} response={response} />
         </>
     )
