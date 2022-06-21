@@ -1,15 +1,24 @@
 
 import styled from 'styled-components';
 import MediaQuery from 'react-responsive'
+import { Oval } from 'react-loader-spinner';
+import { useState } from 'react';
 
 import PublishPost from "../PublishPost";
 import Post from '../Post';
 import Trending from '../Trending';
 import Header from '../Header';
 
-export default function Main({ pageTitle, posts, response }) {
-  const isTimeline = window.location.pathname === "/timeline" ? <PublishPost /> : <></>
 
+export default function Main({ pageTitle, posts, response: type }) {
+
+  const loader = <Oval ariaLabel="loading-indicator" height={50} width={50} strokeWidthSecondary={1} color="#ffffff" secondaryColor="#333333" />
+  const errorMessage = <ErrorCase >An error occured while trying to fetch the posts, please refresh the page</ErrorCase>
+  const notFound = <ErrorCase >There are no posts yet</ErrorCase>
+  const dataResponse = [loader, notFound, errorMessage]
+
+  const isTimeline = window.location.pathname === "/timeline" ? <PublishPost /> : <></>
+  const response = dataResponse[type]
 
   return (
     <>
@@ -73,3 +82,7 @@ const Container = styled.div`
     }
   }
 `;
+
+const ErrorCase = styled.h1`
+    text-align: center;
+`
