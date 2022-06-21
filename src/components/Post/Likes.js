@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 import axiosInstance from '../../instances/axiosInstances';
 
-
 export default function Like({ postId, username }) {
     const [like, setLike] = useState()
     const [likesCount, setLikesCount] = useState(null);
@@ -23,6 +22,7 @@ export default function Like({ postId, username }) {
         let aux = false
         try {
             const promisse = await axiosInstance.get(`${url}/${postId}`, config)
+
             setLikesCount(promisse.data.length)
             if(promisse.data.length === 0){
                 setLike(unLike)
