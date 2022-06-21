@@ -4,14 +4,13 @@ import unLike from "../../assets/images/hearth.png"
 import { useEffect, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 import axios from 'axios'
+import axiosInstance from '../../instances/axiosInstances.js';
 
 export default function Like({ postId, username }) {
     const [like, setLike] = useState()
     const [likesCount, setLikesCount] = useState(null);
     const [likedBy, setLikedBy] = useState([])
     const token = localStorage.getItem('token')
-    const url = "http://localhost:5000/likes"
-
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -21,7 +20,7 @@ export default function Like({ postId, username }) {
     async function getlist() {
         let aux = false
         try {
-            const promisse = await axios.get(`${url}/${postId}`, config)
+            const promisse = await axiosInstance.get(`/likes/${postId}`, config)
             setLikesCount(promisse.data.length)
             for (let i = 0; i < promisse.data.length; i++) {
                 if (promisse.data[i] === username) {
@@ -54,7 +53,7 @@ export default function Like({ postId, username }) {
 
     async function action(postId) {
         try {
-            const promisse = await axios.post(url, { postId }, config)
+            const promisse = await axiosInstance.post("/likes", { postId }, config)
             getlist()
             ReactTooltip.rebuild();
         } catch (error) {
