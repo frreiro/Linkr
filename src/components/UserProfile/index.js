@@ -19,10 +19,11 @@ export default function UserProfile() {
     };
 
     axiosInstance
-      // .get(`/users/${userId}`, config)
-      .get(`/timeline`, config) // só pra fazer funfar aqui e eu testar o botão
+      .get(`/posts/${userId}`, config)
+      // .get(`/timeline`, config) // só pra fazer funfar aqui e eu testar o botão
       .then((res) => {
         res.data.length !== 0 && setPosts(res.data);
+        console.log(posts)
       })
       .catch((err) => console.log(err));
   }, [userId]);
