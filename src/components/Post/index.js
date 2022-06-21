@@ -11,8 +11,8 @@ import axiosInstance from '../../instances/axiosInstances';
 export default function Post(props) {
   const navigate = useNavigate();
 
-
   const { data, setData } = useContext(DataContext);
+  console.log(data)
   const username = data.name;
   const token = localStorage.getItem('token');
 
@@ -135,7 +135,7 @@ export default function Post(props) {
           </p>
         )}
       </Userinfo>
-      <Like postId={props.id} />
+      <Like userName={data.name} postId={props.id} />
       <LinkBanner link={props.linkInfos} />
     </Banner>
   );
