@@ -8,31 +8,36 @@ export default function Timeline() {
 
     const [posts, setPosts] = useState([])
     const [response, setResponse] = useState(0)
-    const [refresh, setRefresh] = useState(false)
     const [pageNumber, setPageNumber] = useState(0)
-    const token = localStorage.getItem('token')
+    const [hasMore, setHasMore] = useState(true)
 
+    const token = localStorage.getItem('token')
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
 
-    const getPost = () => {
-        console.log('rodado')
+
+    useEffect(() => {
         axiosInstance.get(`/timeline?page=${pageNumber}`, config)
-            .then(promise => {
-                promise.data.length !== 0 ? setPosts(promise.data) : setResponse(1)
-                setTimeout(() => setRefresh(!refresh), 5000)
+            .then(({ data: newPosts }) => {
+                if (newPosts.length === 0 && pageNumber !== 0) setHasMore(false)
+                newPosts.length !== 0
+                    ? setPosts([...posts, ...newPosts])
+                    : setResponse(1)
             })
             .catch(e => setResponse(2));
-    }
-
-    useEffect(getPost, [refresh])
+    }, [pageNumber])
 
     return (
         <>
-            <Main pageTitle={"timeline"} posts={posts} response={response} fetchFunction={getPost} />
+            <Main pageTitle={"timeline"}
+                posts={posts} response={response}
+                setPage={setPageNumber}
+                page={pageNumber}
+                hasMore={hasMore}
+            />
         </>
     )
 }
