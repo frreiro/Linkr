@@ -69,6 +69,7 @@ const Container = styled.header`
     font-weight: 700;
     font-size: 3rem;
     margin-left: 1.5rem;
+    cursor: pointer;
   }
   input {
     width: 563px;

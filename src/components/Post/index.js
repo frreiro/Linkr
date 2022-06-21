@@ -213,6 +213,12 @@ const Userinfo = styled.div`
 
     span {
       font-weight: 700;
+      color: #ffffff;
+      cursor: pointer;
+
+      &:hover {
+        filter: brightness(80%);
+      }
     }
   }
 
