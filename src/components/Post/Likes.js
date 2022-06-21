@@ -3,19 +3,15 @@ import liked from "../../assets/images/redhearth.png"
 import unLike from "../../assets/images/hearth.png"
 import { useEffect, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
-import { useContext } from 'react'
-import DataContext from "../context/context";
-import axiosInstance from '../../instances/axiosInstances'
+import axios from 'axios'
 
 
-
-export default function Like({ postId }) {
-    const [like, setLike] = useState(unLike)
+export default function Like({ postId, username }) {
+    const [like, setLike] = useState()
     const [likesCount, setLikesCount] = useState(null);
     const [likedBy, setLikedBy] = useState([])
     const token = localStorage.getItem('token')
-    const url = "/likes"
-    const { data } = useContext(DataContext)
+    const url = "http://localhost:5000/likes"
 
     const config = {
         headers: {
@@ -24,17 +20,20 @@ export default function Like({ postId }) {
     }
 
     async function getlist() {
-        let userName = data.name
         let aux = false
+        console.log("action")
         try {
-            const promisse = await axiosInstance.get(`${url}/${postId}`, config)
+            const promisse = await axios.get(`${url}/${postId}`, config)
+            setLikesCount(promisse.data.length)
             for (let i = 0; i < promisse.data.length; i++) {
-                if (promisse.data[i] === userName) {
+                if (promisse.data[i] === username) {
+                    promisse.data.splice(i,1)
                     aux = true
                     setLike(liked)
+                } else {
+                    setLike(unLike)
                 }
             }
-            setLikesCount(promisse.data.length)
             setLikedBy(filter(promisse.data, aux))
         } catch (error) {
             alert("ocorreu um erro")
@@ -42,27 +41,23 @@ export default function Like({ postId }) {
     }
 
     useEffect(() => {
-        getlist()
-    }, [liked])
+        getlist()   
+    }, [likedBy])
 
     function filter(names, aux) {
         if (names.length === 0) return null
-        else if (aux && names.length === 1) return `você curtiu`
-        else if (aux && names.length === 2) return `você e ${names[0]} curtiram`
-        else if (aux && names.length === 3) return `você, ${names[0]} e outros ${names.length - 2} curtiram`
+        else if (aux && names.length === 0) return `você curtiu`
+        else if (aux && names.length === 1) return `você e ${names[0]} curtiram`
+        else if (aux && names.length === 2) return `você, ${names[0]} e outros ${names.length - 1} curtiram`
         else if (names.length === 1) return `${names[0]} curtiu`
         else if (names.length === 2) return `${names[0]} e ${names[1]} curtiram`
-        else if (names.length > 2) return `${names[0]} e ${names[1]} e outros ${names.length - 2} curtiram`
+        else if (names.length > 2) return `${names[0]} e ${names[1]} e outros ${names.length - 1} curtiram`
     }
 
     async function action(postId) {
         try {
-            const promisse = await axiosInstance.post(url, { postId }, config)
-            if (like === unLike) {
-                setLike(liked)
-            } else {
-                setLike(unLike)
-            }
+            const promisse = await axios.post(url, { postId }, config)
+            getlist()
             ReactTooltip.rebuild();
         } catch (error) {
             alert("ocorreu um erro ao curtir o post")

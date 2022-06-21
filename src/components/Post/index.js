@@ -88,12 +88,11 @@ export default function Post(props) {
     if (editing) {
       inputRef.current.focus();
       const actual = inputRef.current;
-
+      
       actual.addEventListener('keydown', handler);
       return () => actual.removeEventListener('keydown', handler);
     }
   }, [editing]);
-
   return (
     <Banner>
       <ProfilePic src={props.userImage} />
@@ -135,7 +134,7 @@ export default function Post(props) {
           </p>
         )}
       </Userinfo>
-      <Like postId={props.id} />
+      <Like postId={props.id} username={username}/>
       <LinkBanner link={props.linkInfos} />
     </Banner>
   );
