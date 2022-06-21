@@ -3,18 +3,14 @@ import liked from "../../assets/images/redhearth.png"
 import unLike from "../../assets/images/hearth.png"
 import { useEffect, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
-import { useContext } from 'react'
-import DataContext from "../context/context";
-import axiosInstance from '../../instances/axiosInstances'
+import axios from 'axios'
 
-
-
-export default function Like({ postId, userName }) {
-    const [like, setLike] = useState(unLike)
+export default function Like({ postId, username }) {
+    const [like, setLike] = useState()
     const [likesCount, setLikesCount] = useState(null);
     const [likedBy, setLikedBy] = useState([])
     const token = localStorage.getItem('token')
-    const url = "/likes"
+    const url = "http://localhost:5000/likes"
 
     const config = {
         headers: {
@@ -25,13 +21,15 @@ export default function Like({ postId, userName }) {
     async function getlist() {
         let aux = false
         try {
-            const promisse = await axiosInstance.get(`${url}/${postId}`, config)
+            const promisse = await axios.get(`${url}/${postId}`, config)
             setLikesCount(promisse.data.length)
             for (let i = 0; i < promisse.data.length; i++) {
-                if (promisse.data[i] === userName) {
-                    promisse.data.splice(i, 1)
+                if (promisse.data[i] === username) {
+                    promisse.data.splice(i,1)
                     aux = true
                     setLike(liked)
+                } else {
+                    setLike(unLike)
                 }
             }
             setLikedBy(filter(promisse.data, aux))
@@ -41,8 +39,8 @@ export default function Like({ postId, userName }) {
     }
 
     useEffect(() => {
-        getlist()
-    }, [like])
+        getlist()   
+    }, [likedBy])
 
     function filter(names, aux) {
         if (names.length === 0) return null
@@ -56,12 +54,8 @@ export default function Like({ postId, userName }) {
 
     async function action(postId) {
         try {
-            const promisse = await axiosInstance.post(url, { postId }, config)
-            if (like === unLike) {
-                setLike(liked)
-            } else {
-                setLike(unLike)
-            }
+            const promisse = await axios.post(url, { postId }, config)
+            getlist()
             ReactTooltip.rebuild();
         } catch (error) {
             alert("ocorreu um erro ao curtir o post")
