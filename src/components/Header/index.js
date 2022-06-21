@@ -8,8 +8,11 @@ import DataContext from '../context/context.js';
 import axiosInstance from '../../instances/axiosInstances.js';
 
 export default function Header() {
+  const { data, setData } = React.useContext(DataContext);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [user, setUser] = React.useState(null);
+  const defaultPic =
+    'https://w1.pngwing.com/pngs/933/945/png-transparent-social-media-icons-avatar-user-profile-login-black-circle-silhouette-symbol.png';
+
   const navigate = useNavigate();
 
   function handleLogout() {
@@ -17,7 +20,7 @@ export default function Header() {
     localStorage.removeItem('url');
     navigate('/');
   }
-  const { setData } = React.useContext(DataContext)
+
   React.useEffect(() => {
     const usertoken = localStorage.getItem('token');
 
@@ -30,9 +33,7 @@ export default function Header() {
     axiosInstance
       .get('/data', config)
       .then((res) => {
-        console.log('header', res.data);
-        setUser(res.data);
-        setData(res.data)
+        setData(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -40,11 +41,11 @@ export default function Header() {
   return (
     <>
       <Container>
-        <h1 onClick={() => navigate('/')}>linkr</h1>
+        <h1 onClick={() => navigate('/timeline')}>linkr</h1>
         {/* <SearchBar /> */}
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <FaChevronUp /> : <FaChevronDown />}
-          <img src={user?.image || ' '} alt="Foto do perfil" />
+          <img src={data?.image || defaultPic} alt="Foto do perfil" />
         </div>
       </Container>
       {isMenuOpen && (

@@ -6,12 +6,8 @@ import axiosInstance from '../../instances/axiosInstances';
 
 export default function Timeline() {
 
-    const loader = <Oval ariaLabel="loading-indicator" height={50} width={50} strokeWidthSecondary={1} color="#ffffff" secondaryColor="#333333" />
-    const errorMessage = <errorCase >An error occured while trying to fetch the posts, please refresh the page</errorCase>
-    const notFound = <errorCase >There are no posts yet</errorCase>
-
     const [posts, setPosts] = useState([])
-    const [response, setResponse] = useState(loader)
+    const [response, setResponse] = useState(0)
     const [refresh, setRefresh] = useState(false)
 
 
@@ -26,21 +22,15 @@ export default function Timeline() {
     useEffect(() => {
         axiosInstance.get('/timeline', config)
             .then(promise => {
-                promise.data.length !== 0 ? setPosts(promise.data) : setResponse(notFound)
+                promise.data.length !== 0 ? setPosts(promise.data) : setResponse(1)
                 setTimeout(() => setRefresh(!refresh), 5000)
             })
-            .catch(e => setResponse(errorMessage));
+            .catch(e => setResponse(2));
     }, [refresh])
 
-    if (posts.length > 0 && Object.keys(posts[0]).length < 0) {
-        setResponse(notFound)
-    }
     return (
         <>
             <Main pageTitle={"timeline"} posts={posts} response={response} />
         </>
     )
 }
-const errorCase = styled.h1`
-    text-align: center;
-`

@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 import { useContext, useState, useEffect, useRef } from 'react';
-import LinkBanner from '../LinkBanner'
+import LinkBanner from '../LinkBanner';
 import ReactHashtag from '@mdnm/react-hashtag';
 import { useNavigate } from 'react-router';
 import { BsPencilFill } from 'react-icons/bs';
@@ -10,7 +10,6 @@ import axiosInstance from '../../instances/axiosInstances';
 
 export default function Post(props) {
   const navigate = useNavigate();
-
 
   const { data, setData } = useContext(DataContext);
   const username = data.name;
@@ -23,8 +22,8 @@ export default function Post(props) {
   const editedTextRef = useRef(editedText);
 
   function redirectToUserProfile() {
-    const { userId } = props;
-    navigate(`/users/${userId}`);
+    const { userId, userName: username } = props;
+    navigate(`/users/${userId}`, { state: { username } });
   }
 
   const handleHashtagClick = (hashtagName) => {
@@ -95,7 +94,7 @@ export default function Post(props) {
   }, [editing]);
   return (
     <Banner>
-      <ProfilePic src={props.userImage} />
+      <ProfilePic src={props.userImage} onClick={redirectToUserProfile} />
       <EditContainer>
         {props.userId === data.id ? (
           <BsPencilFill
@@ -187,6 +186,10 @@ const ProfilePic = styled.div`
   background-size: 80px;
   background-repeat: no-repeat;
   background-position: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Userinfo = styled.div`
@@ -195,6 +198,11 @@ const Userinfo = styled.div`
     font-weight: 400;
     font-size: 17px;
     color: #fff;
+
+    &:hover {
+      cursor: pointer;
+      filter: brightness(80%);
+    }
   }
 
   .description {
@@ -213,7 +221,7 @@ const Userinfo = styled.div`
       font-size: 19px;
     }
   }
-`
+`;
 const EditContainer = styled.div`
   position: absolute;
   top: 15px;

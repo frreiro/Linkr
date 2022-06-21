@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
 import axios from 'axios'
 
-
 export default function Like({ postId, username }) {
     const [like, setLike] = useState()
     const [likesCount, setLikesCount] = useState(null);
@@ -21,7 +20,6 @@ export default function Like({ postId, username }) {
 
     async function getlist() {
         let aux = false
-        console.log("action")
         try {
             const promisse = await axios.get(`${url}/${postId}`, config)
             setLikesCount(promisse.data.length)
