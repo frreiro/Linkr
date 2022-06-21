@@ -3,14 +3,15 @@ import liked from "../../assets/images/redhearth.png"
 import unLike from "../../assets/images/hearth.png"
 import { useEffect, useState } from 'react'
 import ReactTooltip from 'react-tooltip'
-import axios from 'axios'
-import axiosInstance from '../../instances/axiosInstances.js';
+import axiosInstance from '../../instances/axiosInstances';
 
 export default function Like({ postId, username }) {
     const [like, setLike] = useState()
     const [likesCount, setLikesCount] = useState(null);
     const [likedBy, setLikedBy] = useState([])
     const token = localStorage.getItem('token')
+    const url = "/likes"
+
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -20,8 +21,12 @@ export default function Like({ postId, username }) {
     async function getlist() {
         let aux = false
         try {
-            const promisse = await axiosInstance.get(`/likes/${postId}`, config)
+            const promisse = await axiosInstance.get(`${url}/${postId}`, config)
+
             setLikesCount(promisse.data.length)
+            if(promisse.data.length === 0){
+                setLike(unLike)
+            }
             for (let i = 0; i < promisse.data.length; i++) {
                 if (promisse.data[i] === username) {
                     promisse.data.splice(i,1)
@@ -42,7 +47,7 @@ export default function Like({ postId, username }) {
     }, [likedBy])
 
     function filter(names, aux) {
-        if (names.length === 0) return null
+        if (! aux && names.length === 0) return "ninguém curtiu esse post"
         else if (aux && names.length === 0) return `você curtiu`
         else if (aux && names.length === 1) return `você e ${names[0]} curtiram`
         else if (aux && names.length === 2) return `você, ${names[0]} e outros ${names.length - 1} curtiram`
@@ -53,7 +58,7 @@ export default function Like({ postId, username }) {
 
     async function action(postId) {
         try {
-            const promisse = await axiosInstance.post("/likes", { postId }, config)
+            const promisse = await axiosInstance.post(url, { postId }, config)
             getlist()
             ReactTooltip.rebuild();
         } catch (error) {
