@@ -2,8 +2,7 @@
 import styled from 'styled-components';
 import MediaQuery from 'react-responsive'
 import { Oval } from 'react-loader-spinner';
-import { useState } from 'react';
-
+import InfiniteScroll from 'react-infinite-scroll-component';
 import PublishPost from "../PublishPost";
 import Post from '../Post';
 import Trending from '../Trending';
@@ -16,33 +15,35 @@ export default function Main({ pageTitle, posts, response: type }) {
   const errorMessage = <ErrorCase >An error occured while trying to fetch the posts, please refresh the page</ErrorCase>
   const notFound = <ErrorCase >There are no posts yet</ErrorCase>
   const dataResponse = [loader, notFound, errorMessage]
+  const response = dataResponse[type]
 
   const isTimeline = window.location.pathname === "/timeline" ? <PublishPost /> : <></>
-  const response = dataResponse[type]
+
+
+  const renderPost = (post) => {
+    return <Post
+      key={post.id}
+      id={post.id}
+      userId={post.userId}
+      userImage={post.userImage}
+      userName={post.userName}
+      postDescription={post.postDescription}
+      linkInfos={post.linkInfo}
+    />
+  }
 
   return (
     <>
       <Header />
       <Container>
-        <div>
+        <InfiniteScroll
+          dataLength={posts.length}
+          loader={loader}
+        >
           <h1 className='title'>{pageTitle}</h1>
           {isTimeline}
-          {posts.length > 0
-            ? posts.map((post) => {
-              return (
-                <Post
-                  key={post.id}
-                  id={post.id}
-                  userId={post.userId}
-                  userImage={post.userImage}
-                  userName={post.userName}
-                  postDescription={post.postDescription}
-                  linkInfos={post.linkInfo}
-                />
-              );
-            })
-            : response}
-        </div>
+          {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
+        </InfiniteScroll>
         <MediaQuery minWidth={1000}>
           <Trending />
         </MediaQuery>
