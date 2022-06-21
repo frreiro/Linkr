@@ -19,6 +19,7 @@ export default function Timeline() {
     }
 
     const getPost = () => {
+        console.log('rodado')
         axiosInstance.get(`/timeline?page=${pageNumber}`, config)
             .then(promise => {
                 promise.data.length !== 0 ? setPosts(promise.data) : setResponse(1)
@@ -31,7 +32,7 @@ export default function Timeline() {
 
     return (
         <>
-            <Main pageTitle={"timeline"} posts={posts} response={response} />
+            <Main pageTitle={"timeline"} posts={posts} response={response} fetchFunction={getPost} />
         </>
     )
 }

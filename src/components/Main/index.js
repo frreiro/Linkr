@@ -9,7 +9,7 @@ import Trending from '../Trending';
 import Header from '../Header';
 
 
-export default function Main({ pageTitle, posts, response: type }) {
+export default function Main({ pageTitle, posts, response: type, fechFunction }) {
 
   const loader = <Oval ariaLabel="loading-indicator" height={50} width={50} strokeWidthSecondary={1} color="#ffffff" secondaryColor="#333333" />
   const errorMessage = <ErrorCase >An error occured while trying to fetch the posts, please refresh the page</ErrorCase>
@@ -39,6 +39,7 @@ export default function Main({ pageTitle, posts, response: type }) {
         <InfiniteScroll
           dataLength={posts.length}
           loader={loader}
+          next={fechFunction}
         >
           <h1 className='title'>{pageTitle}</h1>
           {isTimeline}
