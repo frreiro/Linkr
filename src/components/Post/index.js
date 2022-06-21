@@ -22,8 +22,8 @@ export default function Post(props) {
   const editedTextRef = useRef(editedText);
 
   function redirectToUserProfile() {
-    const { userId } = props;
-    navigate(`/users/${userId}`);
+    const { userId, userName: username } = props;
+    navigate(`/users/${userId}`, { state: { username } });
   }
 
   const handleHashtagClick = (hashtagName) => {

@@ -1,41 +1,33 @@
 import React from 'react';
-import { useLocation } from 'react-router';
-
-
-import Main from '../Main';
+import { useLocation, useParams } from 'react-router';
 import axiosInstance from '../../instances/axiosInstances';
+import Main from '../Main';
 
 export default function UserProfile() {
-  const location = useLocation();
-  const { userId } = location.state; // TODO: Pegar esse userId e fazer a requisição dos posts do usuário
-
   const [posts, setPosts] = React.useState([]);
-  const [response, setResponse] = React.useState(0);
+  const { userId } = useParams();
+  const { state } = useLocation();
 
   React.useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    const URL = '';
+    const usertoken = localStorage.getItem('token');
 
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${usertoken}`,
       },
     };
 
     axiosInstance
-      .get(URL, config)
+      .get(`/users/${userId}`, config)
       .then((res) => {
-        res.data.length !== 0
-          ? setPosts(res.data)
-          : setResponse(1);
+        res.data.length !== 0 && setPosts(res.data);
       })
-      .catch((e) => setResponse(2));
-  }, []);
+      .catch((err) => console.log(err));
+  }, [userId]);
 
   return (
     <>
-      <Main pageTitle={posts.username} posts={posts} response={response} />
+      <Main pageTitle={state.username} posts={posts} />
     </>
   );
 }
