@@ -18,7 +18,7 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
   const dataResponse = [loader, notFound, errorMessage]
   const response = dataResponse[type]
 
-  const isTimeline = window.location.pathname === "/timeline" ? <PublishPost /> : <></>
+  const isTimeline = window.location.pathname === "/timeline" ? true : false
 
 
   const renderPost = (post) => {
@@ -33,21 +33,37 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
     />
   }
 
+  const timelineRender = () => {
+    return (
+      <InfiniteScroll
+        dataLength={posts.length}
+        loader={loader}
+        next={() => setPage(page + 1)}
+        hasMore={hasMore}
+        endMessage={endMessage}>
+        <h1 className='title'>{pageTitle}</h1>
+        <PublishPost />
+        {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
+      </InfiniteScroll>
+    )
+  }
+
+
+  //TODO: remover mais tarde e usar tudo com o scroll infinito
+  const mainRender = () => {
+    return (
+      <div>
+        <h1 className='title'>{pageTitle}</h1>
+        {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
+      </div>
+    )
+  }
+
   return (
     <>
       <Header />
       <Container>
-        <InfiniteScroll
-          dataLength={posts.length}
-          loader={loader}
-          next={() => setPage(page + 1)}
-          hasMore={hasMore}
-          endMessage={endMessage}
-        >
-          <h1 className='title'>{pageTitle}</h1>
-          {isTimeline}
-          {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
-        </InfiniteScroll>
+        {isTimeline ? timelineRender() : mainRender()}
         <MediaQuery minWidth={1000}>
           <Trending />
         </MediaQuery>
