@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import axiosInstance from '../../instances/axiosInstances';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
 import DataContext from '../context/context';
@@ -13,10 +13,38 @@ export default function FollowButton() {
   const [isFollowing, setIsFollowing] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleFollow = () => {
+  const handleFollowUnfolow = () => {
     setIsLoading(true);
-    setIsFollowing(!isFollowing);
-    setIsLoading(false);
+
+    const usertoken = localStorage.getItem('token');
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+      },
+    };
+
+    const data = { currentUserId, followedUserId: userId };
+
+    let promise;
+
+    if (isFollowing) {
+      promise = axiosInstance.delete('/follow', data, config);
+    } else {
+      promise = axiosInstance.post('/follow', data, config);
+    }
+
+    promise
+      .then(() => {
+        setIsFollowing(!isFollowing);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('deu ruim na hora de seguir/deixar de seguir fulano');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   React.useEffect(() => {
@@ -25,7 +53,7 @@ export default function FollowButton() {
 
   return (
     buttonShouldAppear && (
-      <Button onClick={handleFollow} disabled={isLoading}>
+      <Button onClick={handleFollowUnfolow} disabled={isLoading}>
         {isFollowing ? 'Unfollow' : 'Follow'}
       </Button>
     )
