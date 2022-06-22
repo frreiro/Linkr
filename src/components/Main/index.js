@@ -19,9 +19,13 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
 
   const dataResponse = [loader, notFound, errorMessage, noFollowers]
   const response = dataResponse[type]
-
   const isTimeline = window.location.pathname === "/timeline" ? true : false
-
+  const isUserProfile = window.location.pathname.includes("/users/")
+    ? <ProfilePic>
+      <img src={pageTitle.userImage} alt="User-image" />
+      <h1 className='user-title'>{pageTitle.username}</h1>
+    </ProfilePic>
+    : <h1 className='title'>{pageTitle}</h1>
 
   const renderPost = (post) => {
     return <Post
@@ -32,6 +36,9 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
       userName={post.userName}
       postDescription={post.postDescription}
       linkInfos={post.linkInfo}
+      retweetCount={post.retweetCount}
+      isRetweet={post.isRetweet}
+      retweeterUsername={post.retweeterUsername}
     />
   }
 
@@ -42,8 +49,10 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
         loader={loader}
         next={() => setPage(page + 1)}
         hasMore={hasMore}
-        endMessage={endMessage}>
-        <h1 className='title'>{pageTitle}</h1>
+        endMessage={endMessage}
+        className="infinite-scroll"
+      >
+        {isUserProfile}
         <PublishPost />
         {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
       </InfiniteScroll>
@@ -55,7 +64,7 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
   const mainRender = () => {
     return (
       <div>
-        <h1 className='title'>{pageTitle}</h1>
+        {isUserProfile}
         {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
       </div>
     )
@@ -77,19 +86,25 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
 
 
 const Container = styled.div`
-  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   
   .title {
     font-family: 'Oswald';
     font-size: 33px;
     font-weight: 700;
     color: #fff;
-    margin-left: 17px;
     margin-top: 19px;
+    margin-left: 17px;
     margin-bottom: 19px;
+  }
+
+  .infinite-scroll{
+    ::-webkit-scrollbar{
+      width:0px;
+    }
   }
   
 
@@ -109,3 +124,44 @@ const Container = styled.div`
 const ErrorCase = styled.h1`
     text-align: center;
 `
+const ProfilePic = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 17px;
+  margin-bottom: 19px;
+  
+
+  img{ 
+    width: 40px;
+    height: 40px;
+    border-radius: 26.5px;
+    overflow: hidden;
+
+  }
+  
+  .user-title{
+    font-family: 'Oswald';
+    font-size: 33px;
+    font-weight: 700;
+    color: #fff;
+    margin-left: 18px;
+    
+  }
+  
+    @media (min-width: 376px) {
+      margin-top: 78px;
+      margin-bottom: 41px;
+
+      img{
+        width: 50px;
+        height: 50px;
+      }
+  
+      .user-title {
+        font-size: 43px;
+      }
+    }
+  
+
+`;

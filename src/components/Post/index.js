@@ -4,10 +4,14 @@ import LinkBanner from '../LinkBanner';
 import ReactHashtag from '@mdnm/react-hashtag';
 import { useNavigate } from 'react-router';
 import { BsPencilFill } from 'react-icons/bs';
+import {RiRepeatFill} from "react-icons/ri";
+
 import DataContext from '../context/context.js';
 import Like from './Likes';
 import axiosInstance from '../../instances/axiosInstances';
 import Delete from './Delete';
+import Comments from './Comments';
+import CommentsBar from './CommentsBar';
 
 export default function Post(props) {
   const navigate = useNavigate();
@@ -16,9 +20,11 @@ export default function Post(props) {
   const username = data.name;
   const token = localStorage.getItem('token');
 
+  const [viewComments, setViewComments] = useState(false)
   const [editing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(props.postDescription);
   const [disabled, setDisabled] = useState(false);
+  const [confirming, setConfirming] = useState(false);
   const inputRef = useRef(null);
   const editedTextRef = useRef(editedText);
 
@@ -88,62 +94,75 @@ export default function Post(props) {
     if (editing) {
       inputRef.current.focus();
       const actual = inputRef.current;
-      
+
       actual.addEventListener('keydown', handler);
       return () => actual.removeEventListener('keydown', handler);
     }
   }, [editing]);
   return (
-    <Banner>
-      <ProfilePic src={props.userImage} onClick={redirectToUserProfile} />
-      <EditContainer>
-        {props.userId === data.id ? (
-          <BsPencilFill
-            onClick={() => {
-              setEditing(!editing);
-              setTextRef(props.postDescription);
-            }}
-          />
-        ) : (
-          ''
-        )}
-      </EditContainer>
-      <Delete />
-      <Userinfo>
-        <h1 className="name" onClick={redirectToUserProfile}>
-          {props.userName}
-        </h1>
-        {editing ? (
-          <textarea
-            style={disabled ? { opacity: '0.5' } : {}}
-            disabled={disabled ? 'disabled' : ''}
-            ref={inputRef}
-            defaultValue={props.postDescription}
-            onFocus={(e) =>
-              e.currentTarget.setSelectionRange(
-                e.currentTarget.value.length,
-                e.currentTarget.value.length
-              )
-            }
-            onChange={(e) => setTextRef(e.target.value)}
-          />
-        ) : (
-          <p className="description">
-            <ReactHashtag onHashtagClick={handleHashtagClick}>
-              {props.postDescription}
-            </ReactHashtag>
-          </p>
-        )}
-      </Userinfo>
-      <Like postId={props.id} username={username}/>
-      <LinkBanner link={props.linkInfos} />
-    </Banner>
+      <PostContainer>
+        {props.isRetweet ? 
+          <RetweetContainer>
+            <RiRepeatFill style={{fontSize: "18px", marginLeft: "15px"}}/>
+            <span>Re-posted by <strong style={{fontWeight: "600"}}>{props.retweeterUsername === username ? "you" : props.retweeterUsername }</strong></span>
+          </RetweetContainer>
+        : ""}
+        <Banner>
+          
+          <ProfilePic src={props.userImage} onClick={redirectToUserProfile} />
+          <EditContainer>
+            {props.userId === data.id ? (
+              <BsPencilFill
+                onClick={() => {
+                  setEditing(!editing);
+                  setTextRef(props.postDescription);
+                }}
+              />
+            ) : (
+              ''
+            )}
+          </EditContainer>
+          <Delete />
+          <Userinfo>
+            <h1 className="name" onClick={redirectToUserProfile}>
+              {props.userName}
+            </h1>
+            {editing ? (
+              <textarea
+                style={disabled ? { opacity: '0.5' } : {}}
+                disabled={disabled ? 'disabled' : ''}
+                ref={inputRef}
+                defaultValue={props.postDescription}
+                onFocus={(e) =>
+                  e.currentTarget.setSelectionRange(
+                    e.currentTarget.value.length,
+                    e.currentTarget.value.length
+                  )
+                }
+                onChange={(e) => setTextRef(e.target.value)}
+              />
+            ) : (
+              <p className="description">
+                <ReactHashtag onHashtagClick={handleHashtagClick}>
+                  {props.postDescription}
+                </ReactHashtag>
+              </p>
+            )}
+          </Userinfo>
+          <Like postId={props.id} username={username} retweetCount={props.retweetCount}/>
+          <LinkBanner link={props.linkInfos} />
+        </Banner>
+      </PostContainer>
   );
 }
 
+const PostContainer = styled.div`
+  position: relative;
+  margin-top: 45px;
+`
+
 const Banner = styled.div`
   width: 100vw;
-  height: 232px;
   background-color: #171717;
   position: relative;
   border-radius: 0px;
@@ -155,7 +174,6 @@ const Banner = styled.div`
 
   @media (min-width: 376px) {
     width: 611px;
-    height: 276px;
     border-radius: 16px;
     padding: 19px 23px 20px 86px;
   }
@@ -170,6 +188,37 @@ const Banner = styled.div`
     padding: 9px;
   }
 `;
+
+const RetweetContainer = styled.div`
+  position: absolute;
+  width: 100vw;
+  height: 30px;
+  background-color: #1E1E1E;
+  display: flex;
+  align-items: center;
+  top: -30px;
+
+  @media (min-width: 376px) {
+    width: 611px;
+    height: 20px;
+    border-radius: 16px;
+    padding-bottom: 80px;
+
+    svg {
+      position: absolute;
+      top: 6px;
+      left: 10px;
+    }
+    span {
+      position: absolute;
+      top: 8px;
+      left: 45px;
+      margin-left: 10px;
+      font-size: 14px;
+    }
+  }
+`
+
 const ProfilePic = styled.div`
   width: 40px;
   height: 40px;

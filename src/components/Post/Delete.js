@@ -15,18 +15,24 @@ export default function Delete(){
         )
     }
     function Modal(){
-        return(
-            <ModalStyle>
-                <div className='box'>
-                    <h1>Are you sure you want to delete this post?</h1>
-                    <div className='buttons'>
-                        <button>No, go back</button>
-                        <button>Yes, delete it</button>
+        if(open){
+            return(
+                <ModalStyle>
+                    <div className='box'>
+                        <h1>Are you sure you want to delete this post?</h1>
+                        <div className='buttons'>
+                            <button>No, go back</button>
+                            <button>Yes, delete it</button>
+                        </div>
                     </div>
-                </div>
-                <div className='background'></div>
-            </ModalStyle>
-        )
+                    <div className='background'></div>
+                </ModalStyle>
+            )
+        } else {
+            return(
+                <></>
+            )
+        }
     }
     return(
         <>
@@ -66,6 +72,11 @@ const ModalStyle = styled.div`
         z-index: 10;
     }
     .box h1{
-
+        font-family: 'Lato';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 34px;
+        line-height: 41px;
+        text-align: center;
     }
 `;
