@@ -13,9 +13,11 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
 
   const loader = <Oval ariaLabel="loading-indicator" height={50} width={50} strokeWidthSecondary={1} color="#ffffff" secondaryColor="#333333" />
   const errorMessage = <ErrorCase >An error occured while trying to fetch the posts, please refresh the page</ErrorCase>
-  const notFound = <ErrorCase >There are no posts yet</ErrorCase>
+  const notFound = <ErrorCase >No posts found from your friends</ErrorCase>
   const endMessage = <ErrorCase >You've seen all</ErrorCase>
-  const dataResponse = [loader, notFound, errorMessage]
+  const noFollowers = <ErrorCase >You don't follow anyone yet. Search for new friends!</ErrorCase>
+
+  const dataResponse = [loader, notFound, errorMessage, noFollowers]
   const response = dataResponse[type]
 
   const isTimeline = window.location.pathname === "/timeline" ? true : false

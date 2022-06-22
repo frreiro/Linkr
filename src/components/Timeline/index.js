@@ -27,7 +27,11 @@ export default function Timeline() {
                     ? setPosts([...posts, ...newPosts])
                     : setResponse(1)
             })
-            .catch(e => setResponse(2));
+            .catch(e => {
+                if (e.response.status === 404 && e.response.data === "No followers found") {
+                    setResponse(3)
+                } else setResponse(2)
+            });
     }, [pageNumber])
 
     return (
