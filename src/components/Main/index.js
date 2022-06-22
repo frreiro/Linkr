@@ -36,6 +36,9 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
       userName={post.userName}
       postDescription={post.postDescription}
       linkInfos={post.linkInfo}
+      retweetCount={post.retweetCount}
+      isRetweet={post.isRetweet}
+      retweeterUsername={post.retweeterUsername}
     />
   }
 
