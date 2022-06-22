@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 export default function Delete(){
     const [open, setOpen] = React.useState(false);
-    console.log(open);
     function DeleteButton(){
         return(
             <DeleteIcon>
@@ -17,8 +16,7 @@ export default function Delete(){
     }
     function Modal(){
         return(
-            <div className='modal'>
-                <div className='background'></div>
+            <ModalStyle>
                 <div className='box'>
                     <h1>Are you sure you want to delete this post?</h1>
                     <div className='buttons'>
@@ -26,7 +24,8 @@ export default function Delete(){
                         <button>Yes, delete it</button>
                     </div>
                 </div>
-            </div>
+                <div className='background'></div>
+            </ModalStyle>
         )
     }
     return(
@@ -41,4 +40,32 @@ const DeleteIcon = styled.div`
     position: absolute;
     right: 8px;
     top: 13px;
+`;
+
+const ModalStyle = styled.div`
+    .background{
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(255, 255, 255, 0.2);
+        z-index: 1;
+    }
+    .box{
+        width: 597px;
+        height: 262px;
+        margin: auto auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        background: #333333;
+        border-radius: 50px;
+        z-index: 10;
+    }
+    .box h1{
+
+    }
 `;
