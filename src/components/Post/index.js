@@ -146,6 +146,7 @@ const Banner = styled.div`
   position: relative;
   border-radius: 0px;
   display: flex;
+  word-wrap: break-word;
   flex-direction: column;
   justify-content: space-between;
   padding: 19px 23px 20px 69px;
@@ -153,7 +154,7 @@ const Banner = styled.div`
 
   @media (min-width: 376px) {
     width: 611px;
-    height: 276px;
+    /* height: 276px; */
     border-radius: 16px;
     padding: 19px 23px 20px 86px;
   }

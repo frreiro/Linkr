@@ -22,7 +22,7 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
   const isTimeline = window.location.pathname === "/timeline" ? true : false
   const isUserProfile = window.location.pathname.includes("/users/")
     ? <ProfilePic>
-      <img src={pageTitle.userImage} alt="User-image" />
+      <img src={pageTitle.userImage} alt="User" />
       <h1 className='user-title'>{pageTitle.username}</h1>
     </ProfilePic>
     : <h1 className='title'>{pageTitle}</h1>
@@ -50,28 +50,19 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
         className="infinite-scroll"
       >
         {isUserProfile}
-        <PublishPost />
+        {isTimeline ? <PublishPost /> : <></>}
         {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
       </InfiniteScroll>
     )
   }
 
 
-  //TODO: remover mais tarde e usar tudo com o scroll infinito
-  const mainRender = () => {
-    return (
-      <div>
-        {isUserProfile}
-        {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
-      </div>
-    )
-  }
 
   return (
     <>
       <Header />
       <Container>
-        {isTimeline ? timelineRender() : mainRender()}
+        {timelineRender()}
         <MediaQuery minWidth={1000}>
           <Trending />
         </MediaQuery>
@@ -118,16 +109,12 @@ const Container = styled.div`
   }
 `;
 
-const ErrorCase = styled.h1`
-    text-align: center;
-`
 const ProfilePic = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 19px;
   margin-left: 17px;
   margin-bottom: 19px;
-  
 
   img{ 
     width: 40px;
@@ -148,7 +135,8 @@ const ProfilePic = styled.div`
   
     @media (min-width: 376px) {
       margin-top: 78px;
-      margin-bottom: 41px;
+      margin-bottom: 34px;
+      margin-left: 0px;
 
       img{
         width: 50px;
@@ -162,3 +150,8 @@ const ProfilePic = styled.div`
   
 
 `;
+
+
+const ErrorCase = styled.h1`
+    text-align: center;
+`
