@@ -4,8 +4,7 @@ import {IoChatbubblesOutline} from "react-icons/io5"
 import { useEffect } from "react"
 
 export default function Comments({setViewComments}){
-    const url = "/comments"
-
+    
     return(
         <Box>
             <IoChatbubblesOutline onClick={setViewComments}/>
