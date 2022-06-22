@@ -24,12 +24,12 @@ export default function Like({ postId, username }) {
             const promisse = await axiosInstance.get(`${url}/${postId}`, config)
 
             setLikesCount(promisse.data.length)
-            if(promisse.data.length === 0){
+            if (promisse.data.length === 0) {
                 setLike(unLike)
             }
             for (let i = 0; i < promisse.data.length; i++) {
                 if (promisse.data[i] === username) {
-                    promisse.data.splice(i,1)
+                    promisse.data.splice(i, 1)
                     aux = true
                     setLike(liked)
                 } else {
@@ -43,11 +43,11 @@ export default function Like({ postId, username }) {
     }
 
     useEffect(() => {
-        getlist()   
+        getlist()
     }, [likedBy])
 
     function filter(names, aux) {
-        if (! aux && names.length === 0) return "ninguém curtiu esse post"
+        if (!aux && names.length === 0) return "ninguém curtiu esse post"
         else if (aux && names.length === 0) return `você curtiu`
         else if (aux && names.length === 1) return `você e ${names[0]} curtiram`
         else if (aux && names.length === 2) return `você, ${names[0]} e outros ${names.length - 1} curtiram`
@@ -85,12 +85,18 @@ export default function Like({ postId, username }) {
 }
 
 const Container = styled.div`
+    position: absolute;
+    left: 28px;
+    top: 86px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     img, p{
-        position: absolute;
-        left: 28px;
-        top: 86px;
         width: 25px;
     }
+
     p{
         margin-top: 10px;
         top: 108px;

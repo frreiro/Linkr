@@ -42,7 +42,9 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
         loader={loader}
         next={() => setPage(page + 1)}
         hasMore={hasMore}
-        endMessage={endMessage}>
+        endMessage={endMessage}
+        className="infinite-scroll"
+      >
         <h1 className='title'>{pageTitle}</h1>
         <PublishPost />
         {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
@@ -81,6 +83,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   
   .title {
     font-family: 'Oswald';
@@ -90,6 +93,13 @@ const Container = styled.div`
     margin-left: 17px;
     margin-top: 19px;
     margin-bottom: 19px;
+  }
+
+  .infinite-scroll{
+    background-color: red;
+    ::-webkit-scrollbar{
+      width:0px;
+    }
   }
   
 
