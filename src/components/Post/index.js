@@ -90,7 +90,7 @@ export default function Post(props) {
     if (editing) {
       inputRef.current.focus();
       const actual = inputRef.current;
-      
+
       actual.addEventListener('keydown', handler);
       return () => actual.removeEventListener('keydown', handler);
     }

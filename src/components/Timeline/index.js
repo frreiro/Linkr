@@ -8,29 +8,40 @@ export default function Timeline() {
 
     const [posts, setPosts] = useState([])
     const [response, setResponse] = useState(0)
-    const [refresh, setRefresh] = useState(false)
-
+    const [pageNumber, setPageNumber] = useState(0)
+    const [hasMore, setHasMore] = useState(true)
 
     const token = localStorage.getItem('token')
-
     const config = {
         headers: {
             Authorization: `Bearer ${token}`
         }
     }
 
+
     useEffect(() => {
-        axiosInstance.get('/timeline', config)
-            .then(promise => {
-                promise.data.length !== 0 ? setPosts(promise.data) : setResponse(1)
-                setTimeout(() => setRefresh(!refresh), 5000)
+        axiosInstance.get(`/timeline?page=${pageNumber}`, config)
+            .then(({ data: newPosts }) => {
+                if (newPosts.length === 0 && pageNumber !== 0) setHasMore(false)
+                newPosts.length !== 0
+                    ? setPosts([...posts, ...newPosts])
+                    : setResponse(1)
             })
-            .catch(e => setResponse(2));
-    }, [refresh])
+            .catch(e => {
+                if (e.response.status === 404 && e.response.data === "No followers found") {
+                    setResponse(3)
+                } else setResponse(2)
+            });
+    }, [pageNumber])
 
     return (
         <>
-            <Main pageTitle={"timeline"} posts={posts} response={response} />
+            <Main pageTitle={"timeline"}
+                posts={posts} response={response}
+                setPage={setPageNumber}
+                page={pageNumber}
+                hasMore={hasMore}
+            />
         </>
     )
 }
