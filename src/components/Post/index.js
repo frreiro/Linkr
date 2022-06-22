@@ -7,6 +7,8 @@ import { BsPencilFill } from 'react-icons/bs';
 import DataContext from '../context/context.js';
 import Like from './Likes';
 import axiosInstance from '../../instances/axiosInstances';
+import Comments from './Comments';
+import CommentsBar from './CommentsBar';
 
 export default function Post(props) {
   const navigate = useNavigate();
@@ -15,6 +17,7 @@ export default function Post(props) {
   const username = data.name;
   const token = localStorage.getItem('token');
 
+  const [viewComments, setViewComments] = useState(false)
   const [editing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(props.postDescription);
   const [disabled, setDisabled] = useState(false);
@@ -134,14 +137,15 @@ export default function Post(props) {
         )}
       </Userinfo>
       <Like postId={props.id} username={username}/>
+      <Comments setViewComments={setViewComments}/>
       <LinkBanner link={props.linkInfos} />
+      <CommentsBar viewComments={viewComments}/>
     </Banner>
   );
 }
 
 const Banner = styled.div`
   width: 100vw;
-  height: 232px;
   background-color: #171717;
   position: relative;
   border-radius: 0px;
@@ -153,7 +157,6 @@ const Banner = styled.div`
 
   @media (min-width: 376px) {
     width: 611px;
-    height: 276px;
     border-radius: 16px;
     padding: 19px 23px 20px 86px;
   }
