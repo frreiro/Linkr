@@ -9,7 +9,6 @@ export default function Comments({setViewComments}){
         <Box>
             <IoChatbubblesOutline onClick={setViewComments}/>
             <p>comments</p>
-
         </Box>
     )
 }
