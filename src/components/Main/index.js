@@ -79,7 +79,6 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
 
 
 const Container = styled.div`
-  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
