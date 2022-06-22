@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useLocation, useParams } from 'react-router';
 import axiosInstance from '../../instances/axiosInstances';
 import Main from '../Main';
@@ -6,6 +6,7 @@ import FollowButton from '../FollowButton';
 
 export default function UserProfile() {
   const [posts, setPosts] = React.useState([]);
+  const userPic = useRef("")
   const { userId } = useParams();
   const { state } = useLocation();
 
@@ -20,18 +21,17 @@ export default function UserProfile() {
 
     axiosInstance
       .get(`/posts/${userId}`, config)
-      // .get(`/timeline`, config) // só pra fazer funfar aqui e eu testar o botão
       .then((res) => {
+        userPic.current = res.data[0].userImage
         res.data.length !== 0 && setPosts(res.data);
-        console.log(posts)
       })
       .catch((err) => console.log(err));
   }, [userId]);
-
+  console.log(userPic.current)
   return (
     <>
       <FollowButton />
-      <Main pageTitle={state.username} posts={posts} />
+      <Main pageTitle={{ username: `${state.username}'s posts`, userImage: userPic.current }} posts={posts} />
     </>
   );
 }

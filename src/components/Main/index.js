@@ -19,9 +19,13 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
 
   const dataResponse = [loader, notFound, errorMessage, noFollowers]
   const response = dataResponse[type]
-
   const isTimeline = window.location.pathname === "/timeline" ? true : false
-
+  const isUserProfile = window.location.pathname.includes("/users/")
+    ? <ProfilePic>
+      <img src={pageTitle.userImage} alt="User-image" />
+      <h1 className='user-title'>{pageTitle.username}</h1>
+    </ProfilePic>
+    : <h1 className='title'>{pageTitle}</h1>
 
   const renderPost = (post) => {
     return <Post
@@ -45,7 +49,7 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
         endMessage={endMessage}
         className="infinite-scroll"
       >
-        <h1 className='title'>{pageTitle}</h1>
+        {isUserProfile}
         <PublishPost />
         {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
       </InfiniteScroll>
@@ -57,7 +61,7 @@ export default function Main({ pageTitle, posts, response: type, setPage, page, 
   const mainRender = () => {
     return (
       <div>
-        <h1 className='title'>{pageTitle}</h1>
+        {isUserProfile}
         {posts.length > 0 ? posts.map((post) => { return renderPost(post) }) : response}
       </div>
     )
@@ -89,8 +93,8 @@ const Container = styled.div`
     font-size: 33px;
     font-weight: 700;
     color: #fff;
-    margin-left: 17px;
     margin-top: 19px;
+    margin-left: 17px;
     margin-bottom: 19px;
   }
 
@@ -117,3 +121,44 @@ const Container = styled.div`
 const ErrorCase = styled.h1`
     text-align: center;
 `
+const ProfilePic = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  margin-left: 17px;
+  margin-bottom: 19px;
+  
+
+  img{ 
+    width: 40px;
+    height: 40px;
+    border-radius: 26.5px;
+    overflow: hidden;
+
+  }
+  
+  .user-title{
+    font-family: 'Oswald';
+    font-size: 33px;
+    font-weight: 700;
+    color: #fff;
+    margin-left: 18px;
+    
+  }
+  
+    @media (min-width: 376px) {
+      margin-top: 78px;
+      margin-bottom: 41px;
+
+      img{
+        width: 50px;
+        height: 50px;
+      }
+  
+      .user-title {
+        font-size: 43px;
+      }
+    }
+  
+
+`;
