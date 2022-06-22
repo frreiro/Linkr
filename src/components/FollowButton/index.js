@@ -10,7 +10,7 @@ export default function FollowButton() {
   const currentUserId = data.id;
 
   const [buttonShouldAppear, setButtonShouldAppear] = React.useState(false);
-  const [isFollowing, setIsFollowing] = React.useState(false);
+  const [isFollowing, setIsFollowing] = React.useState(false); // TODO: buscar antes se o usuário segue ou não
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleFollowUnfolow = () => {
@@ -49,6 +49,28 @@ export default function FollowButton() {
 
   React.useEffect(() => {
     setButtonShouldAppear(Number(userId) !== currentUserId);
+
+    const usertoken = localStorage.getItem('token');
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${usertoken}`,
+      },
+    };
+
+    const data = { currentUserId, followedUserId: userId };
+
+    // Verificar se o usuário segue o outro ou não.
+    setIsLoading(true);
+    axiosInstance
+      .get('/follow', data, config)
+      .then((res) => {
+        setIsFollowing(res.data.followStatus);
+        // eu vou enviar um true ou false como resposta
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
+    // TODO: disparar um alerta caso haja erro
   }, [userId, currentUserId]);
 
   return (
