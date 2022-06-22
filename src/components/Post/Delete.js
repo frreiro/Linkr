@@ -1,10 +1,18 @@
 import React from 'react';
+import { AiFillDelete } from 'react-icons/ai';
+import { IconContext } from 'react-icons/lib';
+import styled from 'styled-components';
 
 export default function Delete(){
-
+    const [open, setOpen] = React.useState(false);
+    console.log(open);
     function DeleteButton(){
         return(
-            <img src="../../assets/images/trash.svg" />
+            <DeleteIcon>
+                <IconContext.Provider value={{ color: "white", size: "20px"}}>
+                    <AiFillDelete onClick={() => setOpen(true)}/>
+                </IconContext.Provider>
+            </DeleteIcon>
         )
     }
     function Modal(){
@@ -28,3 +36,9 @@ export default function Delete(){
         </>
     )
 }
+
+const DeleteIcon = styled.div`
+    position: absolute;
+    right: 8px;
+    top: 13px;
+`;

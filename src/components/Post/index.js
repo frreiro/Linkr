@@ -108,6 +108,7 @@ export default function Post(props) {
           ''
         )}
       </EditContainer>
+      <Delete />
       <Userinfo>
         <h1 className="name" onClick={redirectToUserProfile}>
           {props.userName}
@@ -134,12 +135,7 @@ export default function Post(props) {
           </p>
         )}
       </Userinfo>
-<<<<<<< HEAD
-      <Like postId={props.id} />
-      <Delete />
-=======
       <Like postId={props.id} username={username}/>
->>>>>>> 34729c865dc7860bb4c368693886a96424a659ab
       <LinkBanner link={props.linkInfos} />
     </Banner>
   );
