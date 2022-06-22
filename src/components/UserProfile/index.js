@@ -1,61 +1,37 @@
 import React from 'react';
-import { useLocation } from 'react-router';
-
-import { Oval } from 'react-loader-spinner';
-
-import Main from '../Main';
+import { useLocation, useParams } from 'react-router';
 import axiosInstance from '../../instances/axiosInstances';
+import Main from '../Main';
+import FollowButton from '../FollowButton';
 
 export default function UserProfile() {
-  const location = useLocation();
-  const { userId } = location.state; // TODO: Pegar esse userId e fazer a requisição dos posts do usuário
-
-  const loader = (
-    <Oval
-      ariaLabel="loading-indicator"
-      height={50}
-      width={50}
-      strokeWidthSecondary={1}
-      color="#ffffff"
-      secondaryColor="#333333"
-    />
-  );
-
-  const notFoundMessage = <h1 className="response">There are no posts yet.</h1>;
-
-  const errorMessage = (
-    <h1 className="response">
-      An error occured while trying to fetch the posts, please refresh the page.
-    </h1>
-  );
-
   const [posts, setPosts] = React.useState([]);
-  const [response, setResponse] = React.useState(loader);
+  const { userId } = useParams();
+  const { state } = useLocation();
 
   React.useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    const URL = '';
+    const usertoken = localStorage.getItem('token');
 
     const config = {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${usertoken}`,
       },
     };
 
     axiosInstance
-      .get(URL, config)
+      .get(`/posts/${userId}`, config)
+      // .get(`/timeline`, config) // só pra fazer funfar aqui e eu testar o botão
       .then((res) => {
-        res.data.length !== 0
-          ? setPosts(res.data)
-          : setResponse(notFoundMessage);
+        res.data.length !== 0 && setPosts(res.data);
+        console.log(posts)
       })
-      .catch((e) => setResponse(errorMessage));
-  }, []);
+      .catch((err) => console.log(err));
+  }, [userId]);
 
   return (
     <>
-      <Main pageTitle={posts.username} posts={posts} response={response} />
+      <FollowButton />
+      <Main pageTitle={state.username} posts={posts} />
     </>
   );
 }
