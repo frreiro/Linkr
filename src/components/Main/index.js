@@ -96,7 +96,6 @@ const Container = styled.div`
   }
 
   .infinite-scroll{
-    background-color: red;
     ::-webkit-scrollbar{
       width:0px;
     }
