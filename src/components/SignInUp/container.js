@@ -22,13 +22,14 @@ export const Container = styled.main`
         font-family: 'Oswald';
         font-weight: 700;
         font-size: 22px;
-        padding-left: 17px;
         color: #9F9F9F;
     }
     input{
         margin-bottom: 11px;
         background: #FFFFFF;
         color: #9F9F9F;
+        padding-left: 17px;
+
     }
     button{
         background: #1877F2;
