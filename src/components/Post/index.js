@@ -141,7 +141,6 @@ export default function Post(props) {
 
 const Banner = styled.div`
   width: 100vw;
-  height: 232px;
   background-color: #171717;
   position: relative;
   border-radius: 0px;
@@ -154,7 +153,6 @@ const Banner = styled.div`
 
   @media (min-width: 376px) {
     width: 611px;
-    /* height: 276px; */
     border-radius: 16px;
     padding: 19px 23px 20px 86px;
   }
