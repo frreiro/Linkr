@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router';
 
 import DataContext from '../context/context.js';
 import axiosInstance from '../../instances/axiosInstances.js';
@@ -11,12 +12,17 @@ export default function PublishPost(props) {
     const [disabled, setDisabled] = useState(false)
     const [required, setRequired] = useState(false)
 
-    const { data, setData } = useContext(DataContext)
+    const { data } = useContext(DataContext)
 
-    // TODO Get username, token and image from context/storage
     const username = data.name
-    const token = localStorage.getItem("token")
     const image = data.image
+    const token = localStorage.getItem("token")
+
+    const navigate = useNavigate();
+    function redirectToUserProfile() {
+        const { id: userId, name: username } = data;
+        navigate(`/users/${userId}`, { state: { username } });
+    }
 
 
     function disableAndSend(e) {
@@ -60,10 +66,12 @@ export default function PublishPost(props) {
         })
     }
 
+
+
     return (
         <Container>
-            <ProfilePic>
-                <img src={image} />
+            <ProfilePic onClick={redirectToUserProfile}>
+                <img src={image} alt="user" />
             </ProfilePic>
 
             <InfoContainer>

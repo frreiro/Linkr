@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { Oval } from 'react-loader-spinner';
 import Main from '../Main';
 import axiosInstance from '../../instances/axiosInstances';
 

@@ -165,6 +165,7 @@ const Banner = styled.div`
   position: relative;
   border-radius: 0px;
   display: flex;
+  word-wrap: break-word;
   flex-direction: column;
   justify-content: space-between;
   padding: 19px 23px 20px 69px;
