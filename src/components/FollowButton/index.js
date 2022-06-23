@@ -19,10 +19,10 @@ export default function FollowButton() {
     const data = { currentUserId, followedUserId };
 
     const usertoken = localStorage.getItem('token');
-
     const config = {
       headers: {
         authorization: `Bearer ${usertoken}`,
+        users: JSON.stringify(data),
       },
       data,
     };
@@ -66,11 +66,9 @@ export default function FollowButton() {
     axiosInstance
       .get('/follow', config)
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
-        setIsFollowing(res.data); // TRUE ou FALSE
+        setIsFollowing(res.data);
       })
-      .catch((err) => console.log('deu ruim no useEffect', err))
+      .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
   }, [userId, currentUserId]);
 
