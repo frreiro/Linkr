@@ -147,8 +147,10 @@ export default function Post(props) {
               </p>
             )}
           </Userinfo>
+          <Comments setViewComments={setViewComments}/>
           <Like postId={props.id} username={username} retweetCount={props.retweetCount}/>
           <LinkBanner link={props.linkInfos} />
+          <CommentsBar postId={props.id} viewComments={viewComments} />
         </Banner>
       </PostContainer>
   );

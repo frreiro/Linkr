@@ -17,7 +17,7 @@ export default function Like({ postId, username, retweetCount }) {
     const userId = data.id
     const token = localStorage.getItem('token')
     const url = "/likes"
-
+    
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
