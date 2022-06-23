@@ -16,7 +16,7 @@ export default function Comments({setViewComments}){
 const Box = styled.div`
     position: absolute;
     left: 25px;
-    top: 140px;
+    top: 190px;
     font-size: 30px;
     display: flex;
     flex-direction: column;

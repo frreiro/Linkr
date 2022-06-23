@@ -1,19 +1,20 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {FiSend} from "react-icons/fi"
 import styled from "styled-components"
 import { useContext } from "react";
 import DataContext from "../context/context";
 import axiosInstance from "../../instances/axiosInstances";
+import AllComments from "./AllComments";
 
 export default function CommentsBar({postId, viewComments}){
 
     const [comment, setComment] = useState("")
+    const [comments, setComments] = useState([])
+    const [load, setLoad] = useState(false)
     const { data, setData } = useContext(DataContext);
     const {image} = data
     const token = localStorage.getItem('token');
-    // const token = "9829093e-5533-408f-9dc2-fe35881e3c27"
     const url = "/comments"
-    // const url = "http://localhost:5000/comments"
     const config = {
         headers: {
             "Authorization": `Bearer ${token}`
@@ -22,15 +23,31 @@ export default function CommentsBar({postId, viewComments}){
 
     async function sendComment(){
         try {
-            const promisse = await axiosInstance.post(url, {postId: 1, comment}, config)
+            const promisse = await axiosInstance.post(url, {postId, comment}, config)
+            setLoad(!load)
             console.log(promisse.data)
         } catch (error) {
             console.log(error)
         }
     }
+    
+    async function listComments(){
+        try {
+            const promisse = await axiosInstance.get(`${url}/${postId}`,config)
+            setComments(promisse.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        listComments()
+    },[load])
 
     return(
         viewComments ?
+        <>
+        <AllComments comments={comments}/>
         <ContainerWriter>
             <img src={image}/>
             <input  value={comment} 
@@ -39,8 +56,9 @@ export default function CommentsBar({postId, viewComments}){
                     placeholder="Write a comment"></input>
             <FiSend onClick={()=>sendComment()} className="send"/>
         </ContainerWriter>
+        </>
         :
-        <p><></></p>
+        <><></></>
     )   
 }
 
@@ -66,5 +84,12 @@ const ContainerWriter = styled.section`
     .send{
         position: absolute;
         right: 30px;
+    }
+
+    @media only screen and (max-width: 435px) {
+        width: 300px;
+        input{
+            width: 300px; 
+        }
     }
 `
