@@ -65,6 +65,9 @@ export default function FollowButton() {
     axiosInstance
       .get('/follow', data, config)
       .then((res) => {
+        console.log(res);
+        console.log(res.data);
+        console.log(res.data.followStatus);
         setIsFollowing(res.data.followStatus);
         // eu vou enviar um true ou false como resposta
       })
@@ -75,7 +78,10 @@ export default function FollowButton() {
 
   return (
     buttonShouldAppear && (
-      <Button onClick={handleFollowUnfolow} disabled={isLoading}>
+      <Button
+        onClick={handleFollowUnfolow}
+        disabled={isLoading}
+        className={isFollowing ? 'unfollow' : 'follow'}>
         {isFollowing ? 'Unfollow' : 'Follow'}
       </Button>
     )
@@ -92,6 +98,11 @@ const Button = styled.button`
   position: absolute;
   top: 150px;
   right: 30%;
+
+  .unfollow {
+    background-color: #ffffff;
+    color: #1877f2;
+  }
 
   &:disabled {
     filter: opacity(40%);
