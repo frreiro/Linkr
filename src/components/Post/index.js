@@ -122,7 +122,7 @@ export default function Post(props) {
               ''
             )}
           </EditContainer>
-          <Delete />
+          {props.userId === data.id ? (<Delete token={token} id={props.id}/>):(<></>)}
           <Userinfo>
             <h1 className="name" onClick={redirectToUserProfile}>
               {props.userName}
