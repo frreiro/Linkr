@@ -58,6 +58,8 @@ export default function Header() {
 }
 
 const Container = styled.header`
+  position: fixed;
+  width: 100vw;
   top: 0;
   display: flex;
   justify-content: space-between;
@@ -131,6 +133,12 @@ const Container = styled.header`
   .searchResult img {
     width: 35px;
     height: 35px;
+  }
+
+  @media (max-width: 860px){
+    .searchBar{
+      display: none;
+    }
   }
 `;
 

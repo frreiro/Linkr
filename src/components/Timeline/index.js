@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Main from '../Main';
 import axiosInstance from '../../instances/axiosInstances';
+import SearchBar from '../Header/SearchBar';
 
 export default function Timeline() {
 
@@ -34,6 +35,7 @@ export default function Timeline() {
 
     return (
         <>
+            <SearchBar />
             <Main pageTitle={"timeline"}
                 posts={posts} response={response}
                 setPage={setPageNumber}
