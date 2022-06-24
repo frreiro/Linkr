@@ -35,7 +35,7 @@ export default function CommentsBar({postId, viewComments, setCommentsCount}){
     async function listComments(){
         try {
             const promisse = await axiosInstance.get(`${url}/${postId}`,config)
-            setCommentsCount(promisse.data.length)
+            setCommentsCount(promisse.data.list.length)
             setComments(promisse.data.list)
             setFollows(promisse.data.follows)
         } catch (error) {
@@ -86,13 +86,11 @@ const ContainerWriter = styled.section`
         height: 39px;
         background: #252525;
         border-radius: 8px;
-    }
-    input::placeholder{
-        padding-left: 14px;
+        padding-left: 20px;
     }
     .send{
         position: absolute;
-        right: 30px;
+        right: 45px;
     }
 
     @media only screen and (max-width: 435px) {

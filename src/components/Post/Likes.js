@@ -165,7 +165,7 @@ const ConfirmationContainer = styled.div`
 const Container = styled.div`
     position: absolute;
     left: 20px;
-    top: 65px;
+    top: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;

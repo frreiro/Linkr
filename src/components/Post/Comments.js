@@ -1,12 +1,11 @@
 import styled from "styled-components"
-import axiosInstance from "../../instances/axiosInstances"
-import {IoChatbubblesOutline} from "react-icons/io5"
-import { useEffect } from "react"
+import {AiOutlineComment} from "react-icons/ai"
 
 export default function Comments({viewComments, setViewComments,commentsCount}){
+   
     return(
         <Box>
-            <IoChatbubblesOutline onClick={()=>setViewComments(!viewComments)}/>
+            <AiOutlineComment onClick={()=>setViewComments(!viewComments)}/>
             <p>{commentsCount} comments</p>
         </Box>
     )
@@ -20,9 +19,9 @@ const Box = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: 'Lato';
 
     p{
-        margin-top: 10px;
         top: 108px;
         font-family: 'Lato';
         font-weight: 400;
