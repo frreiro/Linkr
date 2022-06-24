@@ -6,11 +6,12 @@ import DataContext from "../context/context";
 import axiosInstance from "../../instances/axiosInstances";
 import AllComments from "./AllComments";
 
-export default function CommentsBar({postId, viewComments}){
+export default function CommentsBar({postId, viewComments, setCommentsCount}){
 
     const [comment, setComment] = useState("")
     const [comments, setComments] = useState([])
     const [load, setLoad] = useState(false)
+    const [follows, setFollows] = useState([])
     const { data, setData } = useContext(DataContext);
     const {image} = data
     const token = localStorage.getItem('token');
@@ -25,16 +26,18 @@ export default function CommentsBar({postId, viewComments}){
         try {
             const promisse = await axiosInstance.post(url, {postId, comment}, config)
             setLoad(!load)
-            console.log(promisse.data)
+            setComment("")
         } catch (error) {
-            console.log(error)
+            alert(error, "Não foi possível enviar o comentário")
         }
     }
     
     async function listComments(){
         try {
             const promisse = await axiosInstance.get(`${url}/${postId}`,config)
-            setComments(promisse.data)
+            setCommentsCount(promisse.data.length)
+            setComments(promisse.data.list)
+            setFollows(promisse.data.follows)
         } catch (error) {
             console.log(error)
         }
@@ -47,7 +50,7 @@ export default function CommentsBar({postId, viewComments}){
     return(
         viewComments ?
         <>
-        <AllComments comments={comments}/>
+        <AllComments comments={comments} follows={follows}/>
         <ContainerWriter>
             <img src={image}/>
             <input  value={comment} 
@@ -62,13 +65,16 @@ export default function CommentsBar({postId, viewComments}){
     )   
 }
 
+
+
 const ContainerWriter = styled.section`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: 20px;
-    margin-left: -80px;
+    margin-left: -86px;
     width: 611px;
+    background-color: #1E1E1E;
+    padding: 25px;
 
     img{
         width: 39px;
@@ -80,6 +86,9 @@ const ContainerWriter = styled.section`
         height: 39px;
         background: #252525;
         border-radius: 8px;
+    }
+    input::placeholder{
+        padding-left: 14px;
     }
     .send{
         position: absolute;

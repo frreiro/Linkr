@@ -18,7 +18,7 @@ export default function Post(props) {
   const { data, setData } = useContext(DataContext);
   const username = data.name;
   const token = localStorage.getItem('token');
-
+  const [commentsCount, setCommentsCount] = useState()
   const [viewComments, setViewComments] = useState(false)
   const [editing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(props.postDescription);
@@ -147,10 +147,10 @@ export default function Post(props) {
               </p>
             )}
           </Userinfo>
-          <Comments setViewComments={setViewComments}/>
+          <Comments setViewComments={setViewComments} commentsCount={commentsCount} viewComments={viewComments}/>
           <Like postId={props.id} username={username} retweetCount={props.retweetCount}/>
           <LinkBanner link={props.linkInfos} />
-          <CommentsBar postId={props.id} viewComments={viewComments} />
+          <CommentsBar postId={props.id} viewComments={viewComments} setCommentsCount={setCommentsCount} />
         </Banner>
       </PostContainer>
   );

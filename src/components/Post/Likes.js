@@ -128,7 +128,7 @@ const Confirming = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 2;
-`
+  `
 
 const ConfirmationContainer = styled.div`
     width: 450px;
@@ -165,7 +165,7 @@ const ConfirmationContainer = styled.div`
 const Container = styled.div`
     position: absolute;
     left: 20px;
-    top: 86px;
+    top: 65px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -173,6 +173,8 @@ const Container = styled.div`
 
     img, p{
         width: 25px;
+        display: flex;
+        justify-content: center;
     }
 
     p{
