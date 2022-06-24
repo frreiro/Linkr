@@ -145,6 +145,13 @@ const Container = styled.header`
       left: calc(50% - 281.5px);
     }
   }
+
+  @media (max-width: 375px){
+    .searchBar{
+      width: 350px;
+      left: calc(50% - 175px);
+    }
+  }
 `;
 
 const Menu = styled.button`
