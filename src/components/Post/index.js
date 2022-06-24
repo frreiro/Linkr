@@ -9,6 +9,7 @@ import { RiRepeatFill } from "react-icons/ri";
 import DataContext from '../context/context.js';
 import Like from './Likes';
 import axiosInstance from '../../instances/axiosInstances';
+import Delete from './Delete';
 import Comments from './Comments';
 import CommentsBar from './CommentsBar';
 import Retweet from './Retweet';
@@ -73,7 +74,7 @@ export default function Post(props) {
     const userData = {
       headers: {
         Authorization: `Bearer ${token}`,
-      },
+      }
     };
 
     const promise = axiosInstance.put(`/posts/${props.id}`, bodyData, userData);
@@ -162,6 +163,7 @@ export default function Post(props) {
 const PostContainer = styled.div`
   position: relative;
   margin-top: 45px;
+  z-index: 0;
 `
 
 const Banner = styled.div`
@@ -169,6 +171,7 @@ const Banner = styled.div`
   background-color: #171717;
   position: relative;
   border-radius: 0px;
+  z-index: 0;
   display: flex;
   word-wrap: break-word;
   flex-direction: column;

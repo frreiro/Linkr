@@ -42,7 +42,7 @@ export default function Header() {
     <>
       <Container>
         <h1 onClick={() => navigate('/timeline')}>linkr</h1>
-        {/* <SearchBar /> */}
+        <SearchBar />
         <div onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <FaChevronUp /> : <FaChevronDown />}
           <img src={data?.image || defaultPic} alt="Foto do perfil" />
@@ -58,12 +58,16 @@ export default function Header() {
 }
 
 const Container = styled.header`
+  position: fixed;
+  width: 100vw;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #151515;
   color: #fff;
   padding: 0.6rem;
+  z-index: 999;
   h1 {
     font-family: 'Passion One', sans-serif;
     font-weight: 700;
@@ -95,9 +99,11 @@ const Container = styled.header`
   }
   .searchBar {
     position: relative;
+    z-index: 99;
   }
   .result {
     position: absolute;
+    z-index: 98;
     top: 38px;
     display: flex;
     flex-direction: column;
@@ -116,9 +122,28 @@ const Container = styled.header`
     margin-top: 5px;
     margin-bottom: 5px;
   }
+  .searchResult h1{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 23px;
+    color: #C5C5C5;
+  }
   .searchResult img {
     width: 35px;
     height: 35px;
+  }
+
+  @media (max-width: 860px){
+    position: relative;
+    top: 0;
+    left: 0;
+    .searchBar{
+      position: absolute;
+      top: 85px;
+      left: calc(50% - 281.5px);
+    }
   }
 `;
 
