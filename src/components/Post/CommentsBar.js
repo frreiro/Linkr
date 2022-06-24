@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react"
-import {FiSend} from "react-icons/fi"
+import { FiSend } from "react-icons/fi"
 import styled from "styled-components"
 import { useContext } from "react";
 import DataContext from "../context/context";
 import axiosInstance from "../../instances/axiosInstances";
 import AllComments from "./AllComments";
 
-export default function CommentsBar({postId, viewComments, setCommentsCount}){
+export default function CommentsBar({ postId, viewComments, setCommentsCount }) {
 
     const [comment, setComment] = useState("")
     const [comments, setComments] = useState([])
     const [load, setLoad] = useState(false)
     const [follows, setFollows] = useState([])
-    const { data, setData } = useContext(DataContext);
-    const {image} = data
+    const { data } = useContext(DataContext);
+    const { image } = data
     const token = localStorage.getItem('token');
     const url = "/comments"
     const config = {
@@ -22,19 +22,19 @@ export default function CommentsBar({postId, viewComments, setCommentsCount}){
         }
     }
 
-    async function sendComment(){
+    async function sendComment() {
         try {
-            const promisse = await axiosInstance.post(url, {postId, comment}, config)
+            const promisse = await axiosInstance.post(url, { postId, comment }, config)
             setLoad(!load)
             setComment("")
         } catch (error) {
             alert(error, "Não foi possível enviar o comentário")
         }
     }
-    
-    async function listComments(){
+
+    async function listComments() {
         try {
-            const promisse = await axiosInstance.get(`${url}/${postId}`,config)
+            const promisse = await axiosInstance.get(`${url}/${postId}`, config)
             setCommentsCount(promisse.data.length)
             setComments(promisse.data.list)
             setFollows(promisse.data.follows)
@@ -43,26 +43,26 @@ export default function CommentsBar({postId, viewComments, setCommentsCount}){
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         listComments()
-    },[load])
+    }, [load])
 
-    return(
+    return (
         viewComments ?
-        <>
-        <AllComments comments={comments} follows={follows}/>
-        <ContainerWriter>
-            <img src={image}/>
-            <input  value={comment} 
-                    onChange={(e)=>setComment(e.target.value)}
-                    type="text"
-                    placeholder="Write a comment"></input>
-            <FiSend onClick={()=>sendComment()} className="send"/>
-        </ContainerWriter>
-        </>
-        :
-        <><></></>
-    )   
+            <>
+                <AllComments comments={comments} follows={follows} />
+                <ContainerWriter>
+                    <img src={image} />
+                    <input value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        type="text"
+                        placeholder="Write a comment"></input>
+                    <FiSend onClick={() => sendComment()} className="send" />
+                </ContainerWriter>
+            </>
+            :
+            <><></></>
+    )
 }
 
 
@@ -75,6 +75,7 @@ const ContainerWriter = styled.section`
     width: 611px;
     background-color: #1E1E1E;
     padding: 25px;
+    border-radius: 0 0 20px 20px;
 
     img{
         width: 39px;
