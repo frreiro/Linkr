@@ -2,36 +2,36 @@ import styled from "styled-components"
 import { useContext } from "react";
 import DataContext from "../context/context";
 
-export default function AllComments({comments, follows}){
+export default function AllComments({ comments, follows }) {
     const { data, setData } = useContext(DataContext);
-    const name=data.name
-    return(
+    const name = data.name
+    return (
         <BoxComment>
-        {comments.map((e, i)=>{ 
-            let status
-            for(let i = 0; i<follows.length; i++){
-                console.log(e.usercom, follows[i].follow)
-                if(e.usercom === follows[i].follow){
-                    status = "• following"
+            {comments.map((e, i) => {
+                let status
+                for (let i = 0; i < follows.length; i++) {
+                    console.log(e.usercom, follows[i].follow)
+                    if (e.usercom === follows[i].follow) {
+                        status = "• following"
+                    }
                 }
-            }
-            status = e.published === e.usercom ? "• post’s author" : status
-            return(
-                <>
-                <Container key={i}>
-                    <img src={e.image}/>
-                    <h1>{e.userName}<span>{status}</span></h1>
-                    <h2>{e.comment}</h2>
-                    <div className="line"></div>
-                </Container>
-                </>
-             ) 
-        })}
+                status = e.published === e.usercom ? "• post’s author" : status
+                return (
+                    <>
+                        <Container key={i}>
+                            <img src={e.image} />
+                            <h1>{e.userName}<span>{status}</span></h1>
+                            <h2>{e.comment}</h2>
+                            <div className="line"></div>
+                        </Container>
+                    </>
+                )
+            })}
         </BoxComment>
     )
 }
 
-const BoxComment=styled.section`
+const BoxComment = styled.section`
     margin-top: 20px;
 `
 
