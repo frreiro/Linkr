@@ -41,10 +41,10 @@ export default function Main({
     <h1 className="title">{pageTitle}</h1>
     ;
 
-  const renderPost = (post) => {
+  const renderPost = (post, i) => {
     return (
       <Post
-        key={post.id}
+        key={post.isRetweet ? i : post.id}
         id={post.id}
         userId={post.userId}
         userImage={post.userImage}
@@ -83,8 +83,8 @@ export default function Main({
             <></>
           )}
           {posts.length > 0
-            ? posts.map((post) => {
-              return renderPost(post);
+            ? posts.map((post, i) => {
+              return renderPost(post, i);
             })
             : response}
         </InfiniteScroll>
