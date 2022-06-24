@@ -12,9 +12,9 @@ export default function Delete({ token, id }){
         const userData = {
             headers: {
               Authorization: `Bearer ${token}`,
-            },
+            }
         };
-        let promisse = axiosInstance.delete(`/posts/${id}`, userData);
+        let promisse = axiosInstance.get(`/delete/${id}`, userData);
         promisse.then(()=> setOpen(false));
         promisse.catch(()=> {alert("Houve um problema ao excluir o post")
         setOpen(false);

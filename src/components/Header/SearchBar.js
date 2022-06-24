@@ -1,7 +1,7 @@
 import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
-import axios from 'axios';
 import { useNavigate } from 'react-router';
+import axiosInstance from '../../instances/axiosInstances';
 
 export default function SearchBar() {
   const [value, setValue] = React.useState('');
@@ -11,14 +11,13 @@ export default function SearchBar() {
   const token = localStorage.getItem('token');
 
   React.useEffect(() => {
-    console.log('entrou no hook');
     const userData = {
       headers: {
         Authorization: `Bearer f0139e0e-828d-4da4-b3a8-b7a7dfb8c004`,
       },
     };
     let obj = { question: value };
-    let promisse = axios.post('http://localhost:5000/search', obj, userData);
+    let promisse = axiosInstance.post('/search', obj, userData);
     promisse.then((response) => setSearch(response.data));
   }, [value]);
 

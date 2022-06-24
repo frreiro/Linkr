@@ -35,7 +35,6 @@ export default function Timeline() {
 
     return (
         <>
-            <SearchBar />
             <Main pageTitle={"timeline"}
                 posts={posts} response={response}
                 setPage={setPageNumber}
