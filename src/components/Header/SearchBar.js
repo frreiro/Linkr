@@ -8,24 +8,44 @@ export default function SearchBar() {
   const [search, setSearch] = React.useState([]);
   const [selected, setSelected] = React.useState(false);
   const navigate = useNavigate();
+  const token = localStorage.getItem('token');
 
   React.useEffect(() => {
     console.log('entrou no hook');
+    const userData = {
+      headers: {
+        Authorization: `Bearer f0139e0e-828d-4da4-b3a8-b7a7dfb8c004`,
+      },
+    };
     let obj = { question: value };
-    let promisse = axios.post('/search', obj);
+    let promisse = axios.post('http://localhost:5000/search', obj, userData);
     promisse.then((response) => setSearch(response.data));
   }, [value]);
 
-  function User({ image, id, name }) {
-    return (
-      <div
-        className="searchResult"
-        onMouseDown={(e) => e.preventDefault()}
-        onClick={() => navigate(`/users/${id}`, { state: { username: name } })}>
-        <img src={image} alt={`Foto do perfil de ${name}`} />
-        <p>{name}</p>
-      </div>
-    );
+  function User({ image, id, name, following }) {
+    if(following){
+      return (
+        <div
+          className="searchResult"
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={() => navigate(`/users/${id}`, { state: { username: name } })}>
+          <img src={image} alt={`Foto do perfil de ${name}`} />
+          <p>{name}</p>
+          <h1>• following</h1>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          className="searchResult"
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={() => navigate(`/users/${id}`, { state: { username: name } })}>
+          <img src={image} alt={`Foto do perfil de ${name}`} />
+          <p>{name}</p>
+        </div>
+      );
+    }
+    
   }
 
   function Results() {
@@ -38,11 +58,28 @@ export default function SearchBar() {
     } else if (selected === false) {
       return <></>;
     } else {
+      let results = search.result;
+      for(let i=0; i<results.length;i++){
+        let item = results[i]
+        if(search.following.includes(item.id)){
+          results.splice(i,1);
+          results.unshift(item);
+        }
+      }
+      console.log(results);
       return (
         <div className="result">
-          {search.map((user) => (
-            <User image={user.image} id={user.id} name={user.userName} />
-          ))}
+          {results.map((user) => {
+            if(search.following.includes(user.id)){
+              return(
+                <User image={user.image} id={user.id} name={user.userName} following={true}/>
+              )
+            } else {
+              return(
+                <User image={user.image} id={user.id} name={user.userName} following={false}/>
+              )
+            }
+          })}
         </div>
       );
     }

@@ -6,14 +6,19 @@ import axiosInstance from '../../instances/axiosInstances';
 
 export default function Delete({ token, id }){
     const [open, setOpen] = React.useState(false);
+    const [disable, setDisable] = React.useState(false)
     function sendDelete(){
+        setDisable(true);
         const userData = {
             headers: {
               Authorization: `Bearer ${token}`,
             },
         };
         let promisse = axiosInstance.delete(`/posts/${id}`, userData);
-
+        promisse.then(()=> setOpen(false));
+        promisse.catch(()=> {alert("Houve um problema ao excluir o post")
+        setOpen(false);
+    })
     }
     function DeleteButton(){
         return(
@@ -31,8 +36,8 @@ export default function Delete({ token, id }){
                     <div className='box'>
                         <h1>Are you sure you want to delete this post?</h1>
                         <div className='buttons'>
-                            <button className='cancel' onClick={()=> setOpen(false)}>No, go back</button>
-                            <button className='ok'>Yes, delete it</button>
+                            <button className='cancel' disabled={disable} onClick={()=> setOpen(false)}>No, go back</button>
+                            <button className='ok' disabled={disable} onClick={() => sendDelete()}>Yes, delete it</button>
                         </div>
                     </div>
                     <div className='background'></div>
