@@ -3,6 +3,7 @@ import axiosInstance from '../../instances/axiosInstances';
 import { useParams } from 'react-router';
 import styled from 'styled-components';
 import DataContext from '../context/context';
+import Swal from 'sweetalert2';
 
 export default function FollowButton() {
   const { userId } = useParams();
@@ -10,37 +11,45 @@ export default function FollowButton() {
   const currentUserId = data.id;
 
   const [buttonShouldAppear, setButtonShouldAppear] = React.useState(false);
-  const [isFollowing, setIsFollowing] = React.useState(false); // TODO: buscar antes se o usuário segue ou não
+  const [isFollowing, setIsFollowing] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const getReqConfig = () => {
+    const followedUserId = Number(userId);
+    const data = { currentUserId, followedUserId };
+
+    const usertoken = localStorage.getItem('token');
+    const config = {
+      headers: {
+        authorization: `Bearer ${usertoken}`,
+        users: JSON.stringify(data),
+      },
+      data,
+    };
+
+    return { config, data };
+  };
 
   const handleFollowUnfolow = () => {
     setIsLoading(true);
 
-    const usertoken = localStorage.getItem('token');
+    const { config, data } = getReqConfig();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${usertoken}`,
-      },
-    };
-
-    const data = { currentUserId, followedUserId: userId };
-
-    let promise;
-
-    if (isFollowing) {
-      promise = axiosInstance.delete('/follow', data, config);
-    } else {
-      promise = axiosInstance.post('/follow', data, config);
-    }
+    const promise = isFollowing
+      ? axiosInstance.delete('/follow', config)
+      : axiosInstance.post('/follow', data, config);
 
     promise
       .then(() => {
         setIsFollowing(!isFollowing);
       })
-      .catch((err) => {
-        console.log(err);
-        alert('deu ruim na hora de seguir/deixar de seguir fulano');
+      .catch(() => {
+        return Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Ocorreu um erro ao tentar seguir ou deixar de seguir o usuário. Recarregue a página e tente novamente!',
+          confirmButtonColor: '#000000',
+        });
       })
       .finally(() => {
         setIsLoading(false);
@@ -50,32 +59,25 @@ export default function FollowButton() {
   React.useEffect(() => {
     setButtonShouldAppear(Number(userId) !== currentUserId);
 
-    const usertoken = localStorage.getItem('token');
+    const { config } = getReqConfig();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${usertoken}`,
-      },
-    };
-
-    const data = { currentUserId, followedUserId: userId };
-
-    // Verificar se o usuário segue o outro ou não.
     setIsLoading(true);
+
     axiosInstance
-      .get('/follow', data, config)
+      .get('/follow', config)
       .then((res) => {
-        setIsFollowing(res.data.followStatus);
-        // eu vou enviar um true ou false como resposta
+        setIsFollowing(res.data);
       })
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
-    // TODO: disparar um alerta caso haja erro
   }, [userId, currentUserId]);
 
   return (
     buttonShouldAppear && (
-      <Button onClick={handleFollowUnfolow} disabled={isLoading}>
+      <Button
+        onClick={handleFollowUnfolow}
+        disabled={isLoading}
+        className={isFollowing ? 'unfollow' : 'follow'}>
         {isFollowing ? 'Unfollow' : 'Follow'}
       </Button>
     )
@@ -92,6 +94,11 @@ const Button = styled.button`
   position: absolute;
   top: 150px;
   right: 30%;
+
+  &.unfollow {
+    background-color: #ffffff;
+    color: #1877f2;
+  }
 
   &:disabled {
     filter: opacity(40%);
