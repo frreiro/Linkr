@@ -4,7 +4,7 @@ import LinkBanner from '../LinkBanner';
 import ReactHashtag from '@mdnm/react-hashtag';
 import { useNavigate } from 'react-router';
 import { BsPencilFill } from 'react-icons/bs';
-import {RiRepeatFill} from "react-icons/ri";
+import { RiRepeatFill } from "react-icons/ri";
 
 import DataContext from '../context/context.js';
 import Like from './Likes';
@@ -12,6 +12,7 @@ import axiosInstance from '../../instances/axiosInstances';
 import Delete from './Delete';
 import Comments from './Comments';
 import CommentsBar from './CommentsBar';
+import Retweet from './Retweet';
 
 export default function Post(props) {
   const navigate = useNavigate();
@@ -24,7 +25,6 @@ export default function Post(props) {
   const [editing, setEditing] = useState(false);
   const [editedText, setEditedText] = useState(props.postDescription);
   const [disabled, setDisabled] = useState(false);
-  const [confirming, setConfirming] = useState(false);
   const inputRef = useRef(null);
   const editedTextRef = useRef(editedText);
 
@@ -100,13 +100,14 @@ export default function Post(props) {
     }
   }, [editing]);
   return (
-      <PostContainer>
-        {props.isRetweet ? 
-          <RetweetContainer>
-            <RiRepeatFill style={{fontSize: "18px", marginLeft: "15px"}}/>
-            <span>Re-posted by <strong style={{fontWeight: "600"}}>{props.retweeterUsername === username ? "you" : props.retweeterUsername }</strong></span>
-          </RetweetContainer>
+    <PostContainer>
+      {props.isRetweet ?
+        <RetweetContainer>
+          <RiRepeatFill style={{ fontSize: "18px", marginLeft: "15px" }} />
+          <span>Re-posted by <strong style={{ fontWeight: "600" }}>{props.retweeterUsername === username ? "you" : props.retweeterUsername}</strong></span>
+        </RetweetContainer>
         : ""}
+<<<<<<< HEAD
         <Banner>
           
           <ProfilePic src={props.userImage} onClick={redirectToUserProfile} />
@@ -155,6 +156,58 @@ export default function Post(props) {
           <CommentsBar postId={props.id} viewComments={viewComments} setCommentsCount={setCommentsCount} />
         </Banner>
       </PostContainer>
+=======
+      <Banner viewComments={viewComments}>
+
+        <ProfilePic src={props.userImage} onClick={redirectToUserProfile} />
+        <EditContainer>
+          {props.userId === data.id ? (
+            <BsPencilFill
+              onClick={() => {
+                setEditing(!editing);
+                setTextRef(props.postDescription);
+              }}
+            />
+          ) : (
+            ''
+          )}
+        </EditContainer>
+        <Userinfo>
+          <h1 className="name" onClick={redirectToUserProfile}>
+            {props.userName}
+          </h1>
+          {editing ? (
+            <textarea
+              style={disabled ? { opacity: '0.5' } : {}}
+              disabled={disabled ? 'disabled' : ''}
+              ref={inputRef}
+              defaultValue={props.postDescription}
+              onFocus={(e) =>
+                e.currentTarget.setSelectionRange(
+                  e.currentTarget.value.length,
+                  e.currentTarget.value.length
+                )
+              }
+              onChange={(e) => setTextRef(e.target.value)}
+            />
+          ) : (
+            <p className="description">
+              <ReactHashtag onHashtagClick={handleHashtagClick}>
+                {props.postDescription}
+              </ReactHashtag>
+            </p>
+          )}
+        </Userinfo>
+        <LinkBanner link={props.linkInfos} />
+        <ActionBar>
+          <Like postId={props.id} username={username} />
+          <Comments setViewComments={setViewComments} commentsCount={commentsCount} viewComments={viewComments} />
+          <Retweet postId={props.id} retweetCount={props.retweetCount} />
+        </ActionBar>
+        <CommentsBar postId={props.id} viewComments={viewComments} setCommentsCount={setCommentsCount} />
+      </Banner>
+    </PostContainer>
+>>>>>>> 7b273efbfeec2cab44f88af30ce1221e07abcf31
   );
 }
 
@@ -180,7 +233,7 @@ const Banner = styled.div`
   @media (min-width: 376px) {
     width: 611px;
     border-radius: 16px;
-    padding: 19px 23px 20px 86px;
+    padding: 19px 23px ${props => props.viewComments ? "0px" : "20px"} 86px;
   }
 
   textarea {
@@ -289,3 +342,19 @@ const EditContainer = styled.div`
   top: 15px;
   right: 30px;
 `;
+
+const ActionBar = styled.div` 
+  position: absolute;
+  left: 15px;
+  top: 66px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: 376px) {
+    left: 20px;
+    top: 76px;
+  }
+
+`
