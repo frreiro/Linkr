@@ -20,6 +20,6 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
+    width: 330px;
     height: 55px;
 `
