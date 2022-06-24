@@ -107,56 +107,6 @@ export default function Post(props) {
           <span>Re-posted by <strong style={{ fontWeight: "600" }}>{props.retweeterUsername === username ? "you" : props.retweeterUsername}</strong></span>
         </RetweetContainer>
         : ""}
-<<<<<<< HEAD
-        <Banner>
-          
-          <ProfilePic src={props.userImage} onClick={redirectToUserProfile} />
-          <EditContainer>
-            {props.userId === data.id ? (
-              <BsPencilFill
-                onClick={() => {
-                  setEditing(!editing);
-                  setTextRef(props.postDescription);
-                }}
-              />
-            ) : (
-              ''
-            )}
-          </EditContainer>
-          {props.userId === data.id ? (<Delete token={token} id={props.id}/>):(<></>)}
-          <Userinfo>
-            <h1 className="name" onClick={redirectToUserProfile}>
-              {props.userName}
-            </h1>
-            {editing ? (
-              <textarea
-                style={disabled ? { opacity: '0.5' } : {}}
-                disabled={disabled ? 'disabled' : ''}
-                ref={inputRef}
-                defaultValue={props.postDescription}
-                onFocus={(e) =>
-                  e.currentTarget.setSelectionRange(
-                    e.currentTarget.value.length,
-                    e.currentTarget.value.length
-                  )
-                }
-                onChange={(e) => setTextRef(e.target.value)}
-              />
-            ) : (
-              <p className="description">
-                <ReactHashtag onHashtagClick={handleHashtagClick}>
-                  {props.postDescription}
-                </ReactHashtag>
-              </p>
-            )}
-          </Userinfo>
-          <Comments setViewComments={setViewComments} commentsCount={commentsCount} viewComments={viewComments}/>
-          <Like postId={props.id} username={username} retweetCount={props.retweetCount}/>
-          <LinkBanner link={props.linkInfos} />
-          <CommentsBar postId={props.id} viewComments={viewComments} setCommentsCount={setCommentsCount} />
-        </Banner>
-      </PostContainer>
-=======
       <Banner viewComments={viewComments}>
 
         <ProfilePic src={props.userImage} onClick={redirectToUserProfile} />
@@ -207,7 +157,6 @@ export default function Post(props) {
         <CommentsBar postId={props.id} viewComments={viewComments} setCommentsCount={setCommentsCount} />
       </Banner>
     </PostContainer>
->>>>>>> 7b273efbfeec2cab44f88af30ce1221e07abcf31
   );
 }
 

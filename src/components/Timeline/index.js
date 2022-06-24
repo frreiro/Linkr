@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import Main from '../Main';
 import axiosInstance from '../../instances/axiosInstances';
-<<<<<<< HEAD
-import SearchBar from '../Header/SearchBar';
-=======
 import useInterval from 'use-interval';
->>>>>>> 7b273efbfeec2cab44f88af30ce1221e07abcf31
 
 export default function Timeline() {
   const [posts, setPosts] = useState([]);

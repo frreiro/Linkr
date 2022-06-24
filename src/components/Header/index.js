@@ -136,8 +136,13 @@ const Container = styled.header`
   }
 
   @media (max-width: 860px){
+    position: relative;
+    top: 0;
+    left: 0;
     .searchBar{
-      display: none;
+      position: absolute;
+      top: 85px;
+      left: calc(50% - 281.5px);
     }
   }
 `;
