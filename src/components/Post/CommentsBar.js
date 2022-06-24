@@ -71,7 +71,7 @@ const ContainerWriter = styled.section`
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin-left: -86px;
+    margin-left: -85px;
     width: 611px;
     background-color: #1E1E1E;
     padding: 25px;
@@ -95,9 +95,12 @@ const ContainerWriter = styled.section`
     }
 
     @media only screen and (max-width: 435px) {
-        width: 300px;
+        width: 100vw;
+        margin-left: -69px;
+
         input{
-            width: 300px; 
+            width: 100vw; 
         }
+        
     }
 `
