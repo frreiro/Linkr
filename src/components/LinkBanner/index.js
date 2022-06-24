@@ -16,7 +16,6 @@ export default function LinkBanner(props) {
 
 const Banner = styled.div`
     cursor: pointer;
-    width: 278px;
     height: 115px;
     background-color: #171717;
     border: 1px solid #4D4D4D;
@@ -27,7 +26,7 @@ const Banner = styled.div`
     div{
         display: flex;
         flex-direction: column;
-        padding: 24px 160px 23px 19px;
+        padding: 7px 100px 7px 11px;
         justify-content: space-between;
         overflow: hidden;
         h1{ 
@@ -70,6 +69,8 @@ const Banner = styled.div`
         height: 155px;
 
         div{
+            padding: 24px 160px 23px 19px;
+
             h1{
                 font-size: 16px; 
             }
