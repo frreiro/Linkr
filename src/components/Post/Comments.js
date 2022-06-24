@@ -1,10 +1,10 @@
 import styled from "styled-components"
-import { IoChatbubblesOutline } from "react-icons/io5"
+import { AiOutlineComment } from "react-icons/ai"
 
 export default function Comments({ viewComments, setViewComments, commentsCount }) {
     return (
         <Box>
-            <IoChatbubblesOutline className="icone" onClick={() => setViewComments(!viewComments)} />
+            <AiOutlineComment className="icone" onClick={() => setViewComments(!viewComments)} />
             <p>{commentsCount} comments</p>
         </Box>
     )
