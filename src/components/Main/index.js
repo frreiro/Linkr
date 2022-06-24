@@ -7,11 +7,12 @@ import PublishPost from "../PublishPost";
 import Post from '../Post';
 import Trending from '../Trending';
 import Header from '../Header';
+import Loader from "./Loader.js"
 
 
 export default function Main({ pageTitle, posts, response: type, setPage, page, hasMore }) {
 
-  const loader = <Oval ariaLabel="loading-indicator" height={50} width={50} strokeWidthSecondary={1} color="#ffffff" secondaryColor="#333333" />
+  const loader = <Loader />
   const errorMessage = <ErrorCase >An error occured while trying to fetch the posts, please refresh the page</ErrorCase>
   const notFound = <ErrorCase >No posts found from your friends</ErrorCase>
   const endMessage = <ErrorCase >You've seen all</ErrorCase>
