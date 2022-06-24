@@ -6,46 +6,22 @@ import PublishPost from '../PublishPost';
 import Post from '../Post';
 import Trending from '../Trending';
 import Header from '../Header';
-import TimelineUpdateButton from '../TimelineUpdateButton';
+import Loader from "./Loader.js"
 
-export default function Main({
-  pageTitle,
-  posts,
-  response: type,
-  setPage,
-  page,
-  hasMore,
-  newPostsCount,
-  setNewPostsCount,
-  newPostsArr,
-  setPosts,
-}) {
-  const loader = (
-    <Oval
-      ariaLabel="loading-indicator"
-      height={50}
-      width={50}
-      strokeWidthSecondary={1}
-      color="#ffffff"
-      secondaryColor="#333333"
-    />
-  );
-  const errorMessage = (
-    <ErrorCase>
-      An error occured while trying to fetch the posts, please refresh the page
-    </ErrorCase>
-  );
-  const notFound = <ErrorCase>No posts found from your friends</ErrorCase>;
-  const endMessage = <ErrorCase>You've seen all</ErrorCase>;
-  const noFollowers = (
-    <ErrorCase>You don't follow anyone yet. Search for new friends!</ErrorCase>
-  );
 
-  const dataResponse = [loader, notFound, errorMessage, noFollowers];
-  const response = dataResponse[type];
-  const isTimeline = window.location.pathname === '/timeline' ? true : false;
-  const isUserProfile = window.location.pathname.includes('/users/') ? (
-    <ProfilePic>
+export default function Main({ pageTitle, posts, response: type, setPage, page, hasMore }) {
+
+  const loader = <Loader />
+  const errorMessage = <ErrorCase >An error occured while trying to fetch the posts, please refresh the page</ErrorCase>
+  const notFound = <ErrorCase >No posts found from your friends</ErrorCase>
+  const endMessage = <ErrorCase >You've seen all</ErrorCase>
+  const noFollowers = <ErrorCase >You don't follow anyone yet. Search for new friends!</ErrorCase>
+
+  const dataResponse = [loader, notFound, errorMessage, noFollowers]
+  const response = dataResponse[type]
+  const isTimeline = window.location.pathname === "/timeline" ? true : false
+  const isUserProfile = window.location.pathname.includes("/users/")
+    ? <ProfilePic>
       <img src={pageTitle.userImage} alt="User" />
       <h1 className="user-title">{pageTitle.username}</h1>
     </ProfilePic>
