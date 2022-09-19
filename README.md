@@ -49,7 +49,7 @@ Instale meu projeto e suas dependências
 
 ## Colaboradores
 - [Jackie Morais](https://www.linkedin.com/in/moraesjackie)
-- [Matheus Mazzeti](https://www.linkedin.com/in/matheusmazetti)
+- [Matheus Mazetti](https://www.linkedin.com/in/matheusmazetti)
 - [Lucas Viana](https://www.linkedin.com/in/frreiro)
 - [Marco Júnior](https://www.linkedin.com/in/marcojr73)
 - [Lucca Rauédys](https://www.linkedin.com/in/luccarauedys)
